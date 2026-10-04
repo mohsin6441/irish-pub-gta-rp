@@ -226,4 +226,36 @@ document.addEventListener("DOMContentLoaded", function () {
     updateParallax();
 
 })();
+/* =====================================================
+   IRISH PUB BACKGROUND PARALLAX
+===================================================== */
+
+(function () {
+
+    let ticking = false;
+
+    function updateBackground() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const movement = scrollY * -0.06;
+
+        document.documentElement.style.setProperty(
+            "--pub-bg-y",
+            movement + "px"
+        );
+
+        ticking = false;
+    }
+
+    window.addEventListener("scroll", function () {
+
+        if (!ticking) {
+            window.requestAnimationFrame(updateBackground);
+            ticking = true;
+        }
+
+    }, { passive: true });
+
+    updateBackground();
+
+})();
 });
