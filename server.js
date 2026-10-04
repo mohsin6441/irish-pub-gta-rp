@@ -33,46 +33,7 @@ app.post("/api/apply", async function (req, res) {
             color: 12953181,
 
             fields: [
-                {
-                    name: "👤 Full Name",
-                    value: String(data.fullName || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "🎭 RP Name",
-                    value: String(data.rpName || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "🆔 CID",
-                    value: String(data.cid || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "📱 Phone Number",
-                    value: String(data.phone || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "🎂 Age",
-                    value: String(data.age || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "💬 Discord ID",
-                    value: String(data.discord || "Not provided"),
-                    inline: true
-                },
-                {
-                    name: "📋 Previous Experience",
-                    value: String(data.experience || "No previous experience"),
-                    inline: false
-                },
-                {
-                    name: "❓ Why do you want to join?",
-                    value: String(data.reason || "Not provided"),
-                    inline: false
-                }
+                [ // PERSONAL INFORMATION { name: "👤 APPLICANT INFORMATION", value: "**Full Name**\n" + `${String(data.fullName || "Not provided")}\n\n` + "**RP Name**\n" + `${String(data.rpName || "Not provided")}\n\n` + "**CID**\n" + `${String(data.cid || "Not provided")}`, inline: false }, // CONTACT INFORMATION { name: "📞 CONTACT INFORMATION", value: "**Phone Number**\n" + `${String(data.phone || "Not provided")}\n\n` + "**Age**\n" + `${String(data.age || "Not provided")}\n\n` + "**Discord ID**\n" + `${String(data.discord || "Not provided")}`, inline: false }, // EXPERIENCE { name: "📋 PREVIOUS EXPERIENCE", value: String( data.experience || "No previous experience provided." ), inline: false }, // REASON { name: "❓ WHY DO YOU WANT TO JOIN?", value: String( data.reason || "No reason provided." ), inline: false } ]
             ],
 
             footer: {
