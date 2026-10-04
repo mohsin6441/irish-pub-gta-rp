@@ -122,5 +122,108 @@ document.addEventListener("DOMContentLoaded", function () {
     if (yearElement) {
         yearElement.textContent = new Date().getFullYear();
     }
+/* =====================================================
+   IRISH PUB 3D SCROLL PARALLAX
+===================================================== */
 
+(function () {
+
+    let ticking = false;
+
+    function updateParallax() {
+
+        const scrollY = window.scrollY;
+
+        /*
+         * Main website background
+         * Slow movement = deep background
+         */
+        const pubMovement = scrollY * -0.055;
+
+        /*
+         * Hero background
+         * Slightly different speed
+         */
+        const heroMovement = scrollY * 0.18;
+
+        document.documentElement.style.setProperty(
+            "--pub-parallax",
+            pubMovement + "px"
+        );
+
+        document.documentElement.style.setProperty(
+            "--hero-parallax",
+            heroMovement + "px"
+        );
+
+        ticking = false;
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            if (!ticking) {
+
+                window.requestAnimationFrame(
+                    updateParallax
+                );
+
+                ticking = true;
+
+            }
+
+        },
+        { passive: true }
+    );
+
+
+    updateParallax();
+
+})();
+/* =========================================
+   IRISH PUB 3D PARALLAX BACKGROUND
+   ========================================= */
+
+(function () {
+
+    let ticking = false;
+
+    function updateParallax() {
+
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        /*
+         * Background moves slower than the page.
+         * This creates the 3D depth effect.
+         */
+        const movement = scrollY * -0.08;
+
+        document.documentElement.style.setProperty(
+            "--pub-bg-y",
+            movement + "px"
+        );
+
+        ticking = false;
+    }
+
+    window.addEventListener(
+        "scroll",
+        function () {
+
+            if (!ticking) {
+
+                window.requestAnimationFrame(updateParallax);
+
+                ticking = true;
+            }
+
+        },
+        { passive: true }
+    );
+
+    updateParallax();
+
+})();
 });

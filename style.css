@@ -1570,5 +1570,579 @@ footer small {
         width: 100%;
     }
 
+    /* =====================================================
+   IRISH PUB - FULL WEBSITE 3D PARALLAX BACKGROUND
+===================================================== */
+
+body {
+    position: relative;
+    background: #050705;
 }
-```
+
+/* Main full website background */
+body::before {
+    content: "";
+    position: fixed;
+
+    top: -8%;
+    left: -8%;
+
+    width: 116%;
+    height: 116%;
+
+    background:
+        linear-gradient(
+            rgba(2, 7, 4, 0.72),
+            rgba(2, 7, 4, 0.82)
+        ),
+        url("https://img.sanishtech.com/u/205758a497ab686e58a7483a83ed4c92.png")
+        center center / cover no-repeat;
+
+    z-index: -10;
+
+    transform:
+        translate3d(0, var(--pub-parallax, 0px), 0)
+        scale(1.08);
+
+    will-change: transform;
+
+    filter: saturate(0.85) contrast(1.08);
+
+    transition: transform 0.08s linear;
+}
+
+
+/* Dark cinematic layer */
+body::after {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -9;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(197, 164, 93, 0.04) 0%,
+            rgba(0, 0, 0, 0.15) 35%,
+            rgba(0, 0, 0, 0.70) 100%
+        );
+
+    mix-blend-mode: normal;
+}
+
+
+/* =====================================================
+   MAKE ALL SECTIONS FEEL LIKE THEY ARE INSIDE THE PUB
+===================================================== */
+
+.section {
+    position: relative;
+
+    background: transparent !important;
+
+    overflow: hidden;
+}
+
+
+/* Glass/dark depth layer behind section content */
+.section::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4, 8, 5, 0.72),
+            rgba(5, 9, 6, 0.88)
+        );
+
+    pointer-events: none;
+}
+
+
+/* Keep all actual section content above background */
+.section > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =====================================================
+   3D SECTION DEPTH
+===================================================== */
+
+.about-container,
+.menu-grid,
+.staff-grid,
+.gallery-grid,
+.application-container,
+.contact-info {
+    transform-style: preserve-3d;
+
+    perspective: 1200px;
+}
+
+
+/* Cards feel slightly floating */
+.menu-card,
+.staff-card,
+.gallery-item,
+.application-form-wrapper,
+.about-image {
+    position: relative;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.45s ease,
+        box-shadow 0.45s ease,
+        border-color 0.45s ease;
+}
+
+
+/* Premium glass effect */
+.menu-card,
+.staff-card,
+.application-form-wrapper {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 23, 18, 0.94),
+            rgba(5, 9, 6, 0.90)
+        );
+
+    backdrop-filter: blur(8px);
+
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.025);
+}
+
+
+/* =====================================================
+   HERO - EXTRA DEPTH
+===================================================== */
+
+.hero {
+    position: relative;
+
+    overflow: hidden;
+
+    background:
+        transparent !important;
+
+    isolation: isolate;
+}
+
+
+/* Hero background becomes deeper */
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -8%;
+
+    z-index: -2;
+
+    background:
+        linear-gradient(
+            rgba(1, 6, 3, 0.30),
+            rgba(1, 6, 3, 0.78)
+        ),
+        url("https://img.sanishtech.com/u/205758a497ab686e58a7483a83ed4c92.png")
+        center / cover no-repeat;
+
+    transform:
+        translate3d(
+            0,
+            var(--hero-parallax, 0px),
+            0
+        )
+        scale(1.08);
+
+    will-change: transform;
+}
+
+
+/* Hero atmospheric fog */
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            transparent 15%,
+            rgba(0,0,0,0.25) 55%,
+            rgba(0,0,0,0.75) 100%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   GOLD LIGHT GLOW
+===================================================== */
+
+.hero-content {
+    filter:
+        drop-shadow(
+            0 15px 35px rgba(0,0,0,0.55)
+        );
+}
+
+
+/* =====================================================
+   FLOATING 3D EFFECT FOR CARDS
+===================================================== */
+
+.menu-card:hover {
+    transform:
+        translateY(-12px)
+        translateZ(35px)
+        rotateX(1deg);
+}
+
+.staff-card:hover {
+    transform:
+        translateY(-12px)
+        translateZ(30px)
+        rotateX(1deg);
+}
+
+.gallery-item:hover {
+    transform:
+        translateZ(25px)
+        scale(1.025);
+}
+
+.about-image:hover {
+    transform:
+        translateZ(30px)
+        rotateY(-1deg);
+}
+
+.application-form-wrapper:hover {
+    transform:
+        translateZ(20px);
+}
+
+
+/* =====================================================
+   PUB LIGHTING
+===================================================== */
+
+.menu::after,
+.staff::after,
+.gallery::after,
+.apply::after,
+.contact::after,
+.about::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(197,164,93,0.055),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.menu::after {
+    top: 5%;
+    left: -180px;
+}
+
+.staff::after {
+    top: 30%;
+    right: -180px;
+}
+
+.gallery::after {
+    bottom: 5%;
+    left: -180px;
+}
+
+.apply::after {
+    top: 15%;
+    right: -180px;
+}
+
+.contact::after {
+    bottom: -150px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+
+/* =====================================================
+   PARALLAX CONTENT DEPTH
+===================================================== */
+
+.hero-content,
+.section-label,
+.section h2,
+.section-description {
+    will-change: transform;
+}
+
+
+/* =====================================================
+   MOBILE PERFORMANCE
+===================================================== */
+
+@media (max-width: 800px) {
+
+    body::before {
+        width: 130%;
+        left: -15%;
+
+        background-position: center center;
+
+        transform:
+            translate3d(0, var(--pub-parallax, 0px), 0)
+            scale(1.12);
+    }
+
+    .hero::before {
+        transform:
+            translate3d(0, var(--hero-parallax, 0px), 0)
+            scale(1.12);
+    }
+
+    .menu-card:hover,
+    .staff-card:hover,
+    .gallery-item:hover,
+    .about-image:hover,
+    .application-form-wrapper:hover {
+        transform: translateY(-5px);
+    }
+
+}
+
+
+/* =====================================================
+   REDUCE MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    body::before,
+    .hero::before {
+        transform: scale(1.05);
+    }
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+/* ================================
+   IRISH PUB FULL BACKGROUND
+   ================================ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #050705;
+    position: relative;
+}
+
+/* Full website background */
+body::before {
+    content: "";
+    position: fixed;
+    inset: -8%;
+    z-index: -5;
+
+    background-image:
+        linear-gradient(
+            rgba(2, 7, 4, 0.48),
+            rgba(2, 7, 4, 0.78)
+        ),
+        url("https://img.sanishtech.com/u/205758a497ab686e58a7483a83ed4c92.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transform: translate3d(0, var(--pub-bg-y, 0px), 0) scale(1.08);
+
+    will-change: transform;
+}
+
+/* Cinematic dark layer */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -4;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 0, 0, 0.05),
+            rgba(0, 0, 0, 0.65)
+        ),
+        linear-gradient(
+            180deg,
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.60)
+        );
+}
+
+/* Make sections show the background */
+section,
+.section {
+    position: relative;
+    background: transparent !important;
+}
+
+/* Section glass/dark layer */
+section::before,
+.section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        180deg,
+        rgba(3, 8, 5, 0.28),
+        rgba(3, 8, 5, 0.48)
+    );
+}
+
+/* Keep section content above overlay */
+section > *,
+.section > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================
+   3D CARD EFFECT
+   ================================ */
+
+.menu-card,
+.staff-card,
+.gallery-item,
+.about-card {
+    transition:
+        transform 0.45s ease,
+        box-shadow 0.45s ease,
+        border-color 0.45s ease;
+}
+
+.menu-card:hover,
+.staff-card:hover,
+.gallery-item:hover,
+.about-card:hover {
+    transform:
+        translateY(-10px)
+        perspective(900px)
+        rotateX(2deg)
+        rotateY(-2deg)
+        scale(1.015);
+
+    box-shadow:
+        0 25px 55px rgba(0, 0, 0, 0.65),
+        0 0 30px rgba(197, 164, 93, 0.10);
+}
+
+/* ================================
+   HERO DEPTH
+   ================================ */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Disable old hero image so new full-site background is visible */
+.hero::before {
+    background-image: none !important;
+}
+
+/* Cinematic hero depth */
+.hero::after {
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ================================
+   MOBILE
+   ================================ */
+
+@media (max-width: 768px) {
+
+    body::before {
+        background-position: center center;
+        transform: scale(1.04);
+    }
+
+    .menu-card:hover,
+    .staff-card:hover,
+    .gallery-item:hover,
+    .about-card:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    body::before {
+        transform: scale(1.05);
+    }
+
+    .menu-card,
+    .staff-card,
+    .gallery-item,
+    .about-card {
+        transition: none;
+    }
+}
+}
