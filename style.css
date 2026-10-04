@@ -541,24 +541,30 @@ body::after {
 
 .about-container {
     max-width: 1200px;
-
-    margin: auto;
+    margin: 0 auto;
 
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
-    gap: 70px;
+    gap: 60px;
 
     align-items: center;
 }
 
+.about-content {
+    width: 100%;
+    text-align: left;
+}
+/* =========================
+   ABOUT IMAGE
+========================= */
+
 .about-image {
     position: relative;
 
-    min-height: 520px;
+    width: 100%;
+    height: 130%;
 
-    padding: 12px;
+    padding: 8px;
 
     border: 1px solid rgba(197, 164, 93, 0.25);
 
@@ -569,78 +575,56 @@ body::after {
             rgba(8, 11, 9, 0.90)
         );
 
-    backdrop-filter: blur(5px);
+    overflow: hidden;
 }
+
+
+/* GOLD INNER BORDER */
 
 .about-image::before {
     content: "";
 
     position: absolute;
 
-    inset: 25px;
+    inset: 15px;
 
-    border: 1px solid rgba(197, 164, 93, 0.1);
+    border: 1px solid rgba(197, 164, 93, 0.15);
+
+    pointer-events: none;
+
+    z-index: 2;
 }
 
-.about-image-content {
+
+/* PHOTO */
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
     position: relative;
 
-    height: 495px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(197, 164, 93, 0.08),
-            transparent 60%
-        );
+    z-index: 1;
 }
 
-.about-image-content span {
-    font-family: 'Cinzel', serif;
 
-    color: #aaa;
-
-    font-size: 25px;
-
-    letter-spacing: 8px;
-}
-
-.about-image-content strong {
-    font-family: 'Cinzel', serif;
-
-    color: #c5a45d;
-
-    font-size: 70px;
-
-    letter-spacing: 8px;
-}
-
-.about-image-content small {
-    color: #555;
-
-    font-size: 8px;
-
-    letter-spacing: 5px;
-}
+/* =========================
+   ABOUT CONTENT
+========================= */
 
 .gold-label {
     color: #c5a45d;
 
     font-size: 9px;
-
     font-weight: 800;
 
     letter-spacing: 3px;
 }
+
 
 .about-content h3 {
     margin: 18px 0 25px;
@@ -652,9 +636,11 @@ body::after {
     line-height: 1.3;
 }
 
+
 .about-content h3 span {
     color: #c5a45d;
 }
+
 
 .about-content p {
     margin-bottom: 18px;
@@ -665,6 +651,11 @@ body::after {
 
     line-height: 1.9;
 }
+
+
+/* =========================
+   ABOUT STATS
+========================= */
 
 .about-stats {
     display: flex;
@@ -678,6 +669,7 @@ body::after {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+
 .about-stats strong {
     display: block;
 
@@ -687,6 +679,7 @@ body::after {
 
     font-size: 28px;
 }
+
 
 .about-stats span {
     display: block;
@@ -699,8 +692,6 @@ body::after {
 
     letter-spacing: 2px;
 }
-
-
 /* =====================================================
    MENU
 ===================================================== */
