@@ -76,7 +76,7 @@ app.post("/api/apply", async function (req, res) {
             ],
 
             footer: {
-                text: "Irish Pub • GTA RP Recruitment"
+                text: "Irish Pub • GTA RP Recruitment • Made By Mohsin"
             },
 
             timestamp: new Date().toISOString()
