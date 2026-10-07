@@ -2565,3 +2565,1085 @@ footer small {
     }
 
 }
+/* =========================================================
+   IRISH PUB — HD / PREMIUM VISUAL UPGRADE
+   DO NOT REMOVE EXISTING CSS
+========================================================= */
+
+/* =========================================================
+   PREMIUM ROOT
+========================================================= */
+
+:root {
+    --irish-gold: #c5a45d;
+    --irish-gold-light: #e4ca82;
+    --irish-green: #07130c;
+    --irish-dark: #030604;
+    --irish-text: #f1eee7;
+    --irish-muted: #9b9b94;
+}
+
+
+/* =========================================================
+   HD BACKGROUND
+========================================================= */
+
+body::before {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(2, 7, 4, 0.18) 0%,
+            rgba(2, 7, 4, 0.42) 45%,
+            rgba(2, 7, 4, 0.78) 100%
+        ),
+        url("https://img.sanishtech.com/u/f2b4ca2a149df79ed3c383a271e7ff13.png")
+        center center / cover no-repeat !important;
+
+    transform: scale(1.015);
+    filter: saturate(1.08) contrast(1.08);
+}
+
+
+/* =========================================================
+   CINEMATIC VIGNETTE
+========================================================= */
+
+body::after {
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(0, 0, 0, 0) 30%,
+            rgba(0, 0, 0, 0.28) 68%,
+            rgba(0, 0, 0, 0.72) 100%
+        ) !important;
+}
+
+
+/* =========================================================
+   NAVBAR PREMIUM GLASS
+========================================================= */
+
+.navbar {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(3, 7, 5, 0.90),
+            rgba(3, 7, 5, 0.72)
+        ) !important;
+
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+
+    border-bottom:
+        1px solid rgba(197, 164, 93, 0.22);
+
+    box-shadow:
+        0 8px 35px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================================================
+   LOGO GLOW
+========================================================= */
+
+.logo {
+    text-shadow:
+        0 0 20px rgba(197, 164, 93, 0.08);
+}
+
+.logo span {
+    text-shadow:
+        0 0 18px rgba(197, 164, 93, 0.35);
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.navbar nav a {
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.navbar nav a:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NAV BUTTON PREMIUM
+========================================================= */
+
+.nav-button {
+    position: relative;
+    overflow: hidden;
+
+    background: rgba(197, 164, 93, 0.03);
+
+    transition:
+        color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.nav-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.18),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.6s ease;
+}
+
+.nav-button:hover::before {
+    left: 140%;
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(197, 164, 93, 0.18);
+}
+
+
+/* =========================================================
+   HERO PREMIUM
+========================================================= */
+
+.hero-content {
+    animation:
+        heroPremiumEnter 1.3s cubic-bezier(.22,.61,.36,1);
+}
+
+.hero-badge {
+    background:
+        rgba(4, 8, 5, 0.28);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 0 30px rgba(197, 164, 93, 0.05);
+}
+
+.hero h1 {
+    text-shadow:
+        0 12px 50px rgba(0,0,0,0.55);
+}
+
+.hero h1 span {
+    text-shadow:
+        0 0 20px rgba(197, 164, 93, 0.12),
+        0 10px 40px rgba(0,0,0,0.45);
+}
+
+.hero p {
+    color: rgba(235, 235, 230, 0.78);
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.primary-button,
+.secondary-button {
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease;
+}
+
+.primary-button::after,
+.secondary-button::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -130%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.20),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.65s ease;
+}
+
+.primary-button:hover::after,
+.secondary-button:hover::after {
+    left: 140%;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-4px);
+}
+
+
+/* =========================================================
+   SECTION PREMIUM LIGHT
+========================================================= */
+
+.section {
+    isolation: isolate;
+}
+
+.section::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: min(900px, 90%);
+
+    height: 1px;
+
+    transform: translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(197,164,93,0.22),
+            transparent
+        );
+
+    opacity: 0.7;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+.section h2 {
+    text-shadow:
+        0 8px 30px rgba(0,0,0,0.45);
+}
+
+.section-label {
+    text-shadow:
+        0 0 18px rgba(197,164,93,0.12);
+}
+
+
+/* =========================================================
+   ABOUT IMAGE — HD LOOK
+========================================================= */
+
+.about-image {
+    box-shadow:
+        0 25px 70px rgba(0,0,0,0.35);
+
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease;
+}
+
+.about-image:hover {
+    transform:
+        translateY(-5px)
+        scale(1.01);
+
+    box-shadow:
+        0 35px 90px rgba(0,0,0,0.48),
+        0 0 35px rgba(197,164,93,0.06);
+}
+
+.about-image img {
+    filter:
+        saturate(1.05)
+        contrast(1.05);
+}
+
+
+/* =========================================================
+   ABOUT TEXT
+========================================================= */
+
+.about-content h3 {
+    text-shadow:
+        0 8px 25px rgba(0,0,0,0.4);
+}
+
+.about-content p {
+    color: rgba(210,210,205,0.72);
+}
+
+
+/* =========================================================
+   ABOUT STATS
+========================================================= */
+
+.about-stats {
+    border-top-color:
+        rgba(197,164,93,0.16);
+}
+
+.about-stats strong {
+    text-shadow:
+        0 0 20px rgba(197,164,93,0.12);
+}
+
+
+/* =========================================================
+   MENU PREMIUM
+========================================================= */
+
+.menu-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(10,18,12,0.68),
+            rgba(3,7,5,0.78)
+        );
+
+    border-color:
+        rgba(197,164,93,0.16);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.16);
+
+    transition:
+        transform 0.45s cubic-bezier(.22,.61,.36,1),
+        border-color 0.35s ease,
+        box-shadow 0.45s ease;
+}
+
+.menu-card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.045),
+            transparent 35%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.menu-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.menu-card:hover {
+    transform:
+        translateY(-10px)
+        scale(1.012);
+
+    border-color:
+        rgba(197,164,93,0.48);
+
+    box-shadow:
+        0 25px 65px rgba(0,0,0,0.40),
+        0 0 25px rgba(197,164,93,0.05);
+}
+
+
+/* =========================================================
+   MENU IMAGE PREMIUM
+========================================================= */
+
+.menu-image {
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(197,164,93,0.035),
+            transparent 70%
+        ) !important;
+}
+
+.menu-image img {
+    filter:
+        saturate(1.08)
+        contrast(1.06)
+        brightness(1.02);
+
+    transition:
+        transform 0.55s cubic-bezier(.22,.61,.36,1),
+        filter 0.35s ease;
+}
+
+.menu-card:hover .menu-image img {
+    transform:
+        scale(1.07);
+
+    filter:
+        saturate(1.16)
+        contrast(1.08)
+        brightness(1.05);
+}
+
+
+/* =========================================================
+   MENU TEXT
+========================================================= */
+
+.menu-info h3 {
+    transition:
+        color 0.3s ease;
+}
+
+.menu-card:hover .menu-info h3 {
+    color: #e4ca82;
+}
+
+.price {
+    text-shadow:
+        0 0 15px rgba(197,164,93,0.10);
+}
+
+
+/* =========================================================
+   STAFF PREMIUM
+========================================================= */
+
+.staff-box {
+    transition:
+        transform 0.45s cubic-bezier(.22,.61,.36,1);
+}
+
+.staff-box:hover {
+    transform: translateY(-8px);
+}
+
+.staff-photo-box {
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(197,164,93,0.06),
+            transparent 65%
+        ),
+        linear-gradient(
+            145deg,
+            rgba(25,37,28,.98),
+            rgba(5,9,6,.98)
+        );
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,0.25);
+
+    transition:
+        border-color 0.35s ease,
+        box-shadow 0.45s ease;
+}
+
+.staff-box:hover .staff-photo-box {
+    border-color:
+        rgba(197,164,93,0.42);
+
+    box-shadow:
+        0 28px 65px rgba(0,0,0,0.40),
+        0 0 25px rgba(197,164,93,0.05);
+}
+
+.staff-photo-box img {
+    filter:
+        saturate(1.04)
+        contrast(1.05);
+
+    transition:
+        transform 0.55s cubic-bezier(.22,.61,.36,1),
+        filter 0.35s ease;
+}
+
+.staff-box:hover .staff-photo-box img {
+    transform:
+        scale(1.055);
+
+    filter:
+        saturate(1.10)
+        contrast(1.08);
+}
+
+.staff-info-box {
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.20);
+
+    transition:
+        border-color 0.35s ease,
+        background 0.35s ease;
+}
+
+.staff-box:hover .staff-info-box {
+    border-color:
+        rgba(197,164,93,0.30);
+}
+
+
+/* =========================================================
+   GALLERY PREMIUM
+========================================================= */
+
+.gallery-item {
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.20);
+
+    transition:
+        transform 0.45s ease,
+        border-color 0.35s ease,
+        box-shadow 0.45s ease;
+}
+
+.gallery-item::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 50%,
+            rgba(0,0,0,0.32)
+        );
+
+    pointer-events: none;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.40);
+}
+
+.gallery-item img {
+    filter:
+        saturate(1.05)
+        contrast(1.05);
+
+    transition:
+        transform 0.7s cubic-bezier(.22,.61,.36,1),
+        filter 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.075);
+
+    filter:
+        saturate(1.13)
+        contrast(1.08);
+}
+
+
+/* =========================================================
+   APPLICATION FORM PREMIUM
+========================================================= */
+
+.application-form-wrapper {
+    position: relative;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,0.38);
+}
+
+.application-form-wrapper::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(197,164,93,0.65),
+            transparent
+        );
+}
+
+.form-group input,
+.form-group textarea {
+    background:
+        rgba(3,7,5,0.82);
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color:
+        rgba(197,164,93,0.22);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    background:
+        rgba(5,10,7,0.96);
+
+    box-shadow:
+        0 0 0 3px rgba(197,164,93,0.06),
+        0 8px 25px rgba(0,0,0,0.20);
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.submit-button {
+    position: relative;
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.submit-button::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.22),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.65s ease;
+}
+
+.submit-button:hover::after {
+    left: 140%;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 15px 45px rgba(197,164,93,0.20);
+}
+
+
+/* =========================================================
+   CONTACT PREMIUM
+========================================================= */
+
+.contact-info {
+    background:
+        rgba(3,7,5,0.18);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,0.18);
+}
+
+.contact-info div {
+    transition:
+        background 0.3s ease;
+}
+
+.contact-info div:hover {
+    background:
+        rgba(197,164,93,0.035);
+}
+
+
+/* =========================================================
+   FOOTER PREMIUM
+========================================================= */
+
+footer {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(3,7,5,0.94),
+            rgba(2,5,3,0.98)
+        ) !important;
+
+    box-shadow:
+        0 -15px 45px rgba(0,0,0,0.18);
+}
+
+.footer-logo {
+    text-shadow:
+        0 0 25px rgba(197,164,93,0.12);
+}
+
+
+/* =========================================================
+   REVEAL ANIMATION — SMOOTHER
+========================================================= */
+
+.reveal-element {
+    opacity: 0;
+
+    transform:
+        translateY(35px)
+        scale(0.985);
+
+    filter: blur(2px);
+
+    transition:
+        opacity 0.9s cubic-bezier(.22,.61,.36,1),
+        transform 0.9s cubic-bezier(.22,.61,.36,1),
+        filter 0.9s ease;
+}
+
+.show-element {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    filter: blur(0);
+}
+
+
+/* =========================================================
+   PREMIUM HERO KEYFRAME
+========================================================= */
+
+@keyframes heroPremiumEnter {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(35px)
+            scale(0.97);
+
+        filter: blur(5px);
+    }
+
+    60% {
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   LARGE HD SCREENS
+========================================================= */
+
+@media (min-width: 1600px) {
+
+    .navbar {
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+
+    .hero-content {
+        max-width: 1100px;
+    }
+
+    .hero h1 {
+        font-size: 112px;
+    }
+
+    .section {
+        padding-left: 9%;
+        padding-right: 9%;
+    }
+
+    .menu-grid,
+    .staff-grid {
+        max-width: 1400px;
+    }
+
+    .menu-image {
+        height: 215px;
+    }
+
+    .staff-photo-box {
+        height: 340px;
+    }
+
+    .gallery-grid {
+        max-width: 1350px;
+        grid-auto-rows: 285px;
+    }
+}
+
+
+/* =========================================================
+   TABLET PREMIUM
+========================================================= */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+
+    .section {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .hero h1 {
+        font-size: clamp(58px, 8vw, 82px);
+    }
+
+    .about-container {
+        gap: 35px;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .menu-image {
+        height: 175px;
+    }
+
+    .staff-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .staff-photo-box {
+        height: 320px;
+    }
+
+    .gallery-grid {
+        grid-auto-rows: 220px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE PREMIUM
+========================================================= */
+
+@media (max-width: 768px) {
+
+    body::before {
+        background-position:
+            58% center !important;
+
+        filter:
+            saturate(1.04)
+            contrast(1.04);
+    }
+
+    .navbar {
+        background:
+            rgba(3,7,5,0.92) !important;
+
+        backdrop-filter:
+            blur(18px) !important;
+
+        -webkit-backdrop-filter:
+            blur(18px) !important;
+    }
+
+    .hero {
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(197,164,93,0.035),
+                transparent 60%
+            ) !important;
+    }
+
+    .hero h1 {
+        text-shadow:
+            0 10px 35px rgba(0,0,0,0.65);
+    }
+
+    .menu-card,
+    .staff-box,
+    .gallery-item {
+        transform: none !important;
+    }
+
+    .menu-card:hover,
+    .staff-box:hover,
+    .gallery-item:hover {
+        transform: none !important;
+    }
+
+    .menu-card:active {
+        transform:
+            scale(0.985) !important;
+    }
+
+    .staff-photo-box {
+        box-shadow:
+            0 12px 30px rgba(0,0,0,0.25);
+    }
+
+    .gallery-item {
+        box-shadow:
+            0 8px 25px rgba(0,0,0,0.22);
+    }
+
+    .section::after {
+        width: 75%;
+    }
+}
+
+
+/* =========================================================
+   SMALL PHONE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hero h1 {
+        text-shadow:
+            0 8px 25px rgba(0,0,0,0.70);
+    }
+
+    .menu-card {
+        border-color:
+            rgba(197,164,93,0.14);
+    }
+
+    .menu-image img {
+        filter:
+            saturate(1.05)
+            contrast(1.04);
+    }
+
+    .staff-photo-box {
+        box-shadow:
+            0 10px 25px rgba(0,0,0,0.22);
+    }
+}
+
+
+/* =========================================================
+   REDUCE MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* SCRIPT.JS PREMIUM EFFECT SUPPORT */
+
+body {
+    --irish-parallax: 0px;
+}
+
+body::before {
+    transform: scale(1.015) translateY(var(--irish-parallax));
+    transition: transform 0.15s linear;
+}
+
+.hero-content {
+    transition: transform 0.18s ease-out;
+}
+
+img {
+    opacity: 0;
+    transition:
+        opacity 0.6s ease,
+        transform 0.5s ease;
+}
+
+img.image-loaded {
+    opacity: 1;
+}
+
+.application-success {
+    animation: applicationSuccess 0.7s ease;
+}
+
+@keyframes applicationSuccess {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.012);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.submit-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
