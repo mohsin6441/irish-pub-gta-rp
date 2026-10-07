@@ -2069,3 +2069,499 @@ footer small {
     }
 
 }
+/* =========================================================
+   MOBILE RESPONSIVE FIX
+   IRISH PUB PUBLIC WEBSITE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    html {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* =========================
+       GLOBAL
+    ========================= */
+
+    .section {
+        padding: 65px 18px !important;
+        min-height: auto !important;
+    }
+
+    .section-label {
+        font-size: 11px !important;
+        letter-spacing: 2px !important;
+    }
+
+    .section h2 {
+        font-size: 30px !important;
+        line-height: 1.15 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .section-description {
+        font-size: 14px !important;
+        line-height: 1.6 !important;
+        max-width: 100% !important;
+    }
+
+
+    /* =========================
+       NAVBAR
+    ========================= */
+
+    nav,
+    .navbar,
+    .nav-container {
+        width: 100% !important;
+    }
+
+    .nav-container {
+        padding: 12px 16px !important;
+    }
+
+    .nav-links {
+        gap: 10px !important;
+    }
+
+    .nav-links a {
+        font-size: 10px !important;
+    }
+
+    .staff-only-button {
+        padding: 8px 12px !important;
+        font-size: 9px !important;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+        min-height: 78vh !important;
+        height: auto !important;
+        padding: 100px 18px 55px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .hero-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .hero h1 {
+        font-size: clamp(38px, 12vw, 62px) !important;
+        line-height: .95 !important;
+        letter-spacing: -1px !important;
+    }
+
+    .hero p {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+        max-width: 330px !important;
+        margin: 15px auto !important;
+    }
+
+    .hero-buttons {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 25px auto 0 !important;
+        gap: 10px !important;
+    }
+
+    .hero-buttons a,
+    .hero-buttons button {
+        width: 100% !important;
+        text-align: center !important;
+        padding: 13px 18px !important;
+    }
+
+    .scroll-indicator {
+        display: none !important;
+    }
+
+
+    /* =========================
+       ABOUT
+    ========================= */
+
+    .about-container,
+    .about-content,
+    .about-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 28px !important;
+    }
+
+    .about-image,
+    .about-image-box {
+        width: 100% !important;
+        height: 260px !important;
+        min-height: 0 !important;
+    }
+
+    .about-image img,
+    .about-image-box img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+    .about-text {
+        width: 100% !important;
+    }
+
+    .about-text p {
+        font-size: 14px !important;
+        line-height: 1.65 !important;
+    }
+
+    .about-stats {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+        margin-top: 20px !important;
+    }
+
+    .about-stat {
+        padding: 14px 5px !important;
+    }
+
+    .about-stat h3 {
+        font-size: 20px !important;
+    }
+
+    .about-stat span,
+    .about-stat p {
+        font-size: 9px !important;
+    }
+
+
+    /* =========================
+       MENU
+    ========================= */
+
+    .menu-container,
+    .menu-grid {
+        width: 100% !important;
+    }
+
+    .menu-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+    }
+
+    .menu-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .menu-image {
+        width: 100% !important;
+        height: 125px !important;
+        padding: 5px !important;
+    }
+
+    .menu-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+
+    .menu-info,
+    .menu-content {
+        padding: 10px !important;
+    }
+
+    .menu-info h3,
+    .menu-content h3 {
+        font-size: 13px !important;
+        line-height: 1.2 !important;
+    }
+
+    .menu-info p,
+    .menu-content p {
+        font-size: 10px !important;
+    }
+
+    .menu-price {
+        font-size: 13px !important;
+    }
+
+    .menu-category {
+        margin-bottom: 30px !important;
+    }
+
+
+    /* =========================
+       STAFF
+    ========================= */
+
+    .staff-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px !important;
+        width: 100% !important;
+    }
+
+    .staff-box {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .staff-photo-box {
+        width: 100% !important;
+        height: 210px !important;
+        padding: 8px !important;
+        overflow: hidden !important;
+    }
+
+    .staff-photo-box img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+        object-position: center !important;
+    }
+
+    .staff-info-box {
+        padding: 13px 10px !important;
+        min-height: 105px !important;
+    }
+
+    .staff-info-box h3 {
+        font-size: 15px !important;
+        margin: 5px 0 !important;
+    }
+
+    .staff-info-box p {
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+    }
+
+    .staff-role {
+        font-size: 8px !important;
+        letter-spacing: 1px !important;
+    }
+
+
+    /* =========================
+       GALLERY
+    ========================= */
+
+    .gallery-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+    }
+
+    .gallery-item {
+        width: 100% !important;
+        height: 150px !important;
+        min-height: 0 !important;
+    }
+
+    .gallery-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+
+
+    /* =========================
+       CAREERS
+    ========================= */
+
+    .careers-container,
+    .careers-grid {
+        width: 100% !important;
+    }
+
+    .careers-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 25px !important;
+    }
+
+    .career-benefits {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .benefit-card {
+        padding: 13px 6px !important;
+    }
+
+    .benefit-card h3 {
+        font-size: 11px !important;
+    }
+
+    .benefit-card p {
+        font-size: 9px !important;
+        line-height: 1.35 !important;
+    }
+
+    .application-form {
+        width: 100% !important;
+        padding: 18px !important;
+    }
+
+    .form-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .form-group {
+        width: 100% !important;
+    }
+
+    .application-form input,
+    .application-form select,
+    .application-form textarea {
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: 13px !important;
+        padding: 11px !important;
+    }
+
+    .application-form textarea {
+        min-height: 110px !important;
+    }
+
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    .contact-grid {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    .contact-card {
+        padding: 18px !important;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        padding: 35px 18px 25px !important;
+    }
+
+    .footer-container,
+    .footer-content {
+        display: flex !important;
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 18px !important;
+    }
+
+    footer p {
+        font-size: 11px !important;
+        line-height: 1.5 !important;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .section {
+        padding: 50px 14px !important;
+    }
+
+    .section h2 {
+        font-size: 27px !important;
+    }
+
+    .hero {
+        min-height: 75vh !important;
+        padding: 90px 14px 45px !important;
+    }
+
+    .hero h1 {
+        font-size: 40px !important;
+    }
+
+    .hero p {
+        font-size: 13px !important;
+    }
+
+    .menu-grid {
+        gap: 9px !important;
+    }
+
+    .menu-image {
+        height: 110px !important;
+    }
+
+    .menu-info,
+    .menu-content {
+        padding: 8px !important;
+    }
+
+    .menu-info h3,
+    .menu-content h3 {
+        font-size: 12px !important;
+    }
+
+    .staff-grid {
+        gap: 9px !important;
+    }
+
+    .staff-photo-box {
+        height: 180px !important;
+    }
+
+    .staff-info-box {
+        min-height: 95px !important;
+        padding: 10px 7px !important;
+    }
+
+    .staff-info-box h3 {
+        font-size: 13px !important;
+    }
+
+    .staff-info-box p {
+        font-size: 9px !important;
+    }
+
+    .gallery-grid {
+        gap: 6px !important;
+    }
+
+    .gallery-item {
+        height: 125px !important;
+    }
+
+    .career-benefits {
+        grid-template-columns: 1fr !important;
+    }
+
+}
