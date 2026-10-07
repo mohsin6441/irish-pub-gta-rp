@@ -1731,7 +1731,13 @@ app.use(
 /* =========================================================
    SERVER START
 ========================================================= */
+app.get("/staff", (req, res) => {
+    res.sendFile(path.join(__dirname, "Staff", "index.html"));
+});
 
+app.get("/staff/", (req, res) => {
+    res.sendFile(path.join(__dirname, "Staff", "index.html"));
+});
 app.listen(
     PORT,
     () => {
