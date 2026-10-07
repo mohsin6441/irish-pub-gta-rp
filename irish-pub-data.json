@@ -1,0 +1,463 @@
+{
+  "staff": [
+    {
+      "name": "Mohsin",
+      "username": "mohsin",
+      "role": "Manager"
+    },
+    {
+      "name": "Manager",
+      "username": "manager",
+      "role": "Staff"
+    },
+    {
+      "name": "Alison Burgurs",
+      "username": "alison",
+      "role": "Manager"
+    },
+    {
+      "name": "Staff 2",
+      "username": "staff2",
+      "role": "Staff"
+    }
+  ],
+  "shifts": {},
+  "shiftHistory": [
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:21:00.305Z",
+      "endedAt": "2026-10-07T08:21:04.463Z",
+      "duration": 4
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:35:08.038Z",
+      "endedAt": "2026-10-07T08:35:09.755Z",
+      "duration": 1
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:35:19.716Z",
+      "endedAt": "2026-10-07T08:44:38.029Z",
+      "duration": 558
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:48:45.565Z",
+      "endedAt": "2026-10-07T08:48:48.460Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:48:54.445Z",
+      "endedAt": "2026-10-07T08:49:01.383Z",
+      "duration": 6
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:49:01.697Z",
+      "endedAt": "2026-10-07T08:49:02.132Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:49:02.560Z",
+      "endedAt": "2026-10-07T08:49:03.423Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:56:05.850Z",
+      "endedAt": "2026-10-07T08:56:11.651Z",
+      "duration": 5
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:57:08.380Z",
+      "endedAt": "2026-10-07T08:57:11.581Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:57:12.129Z",
+      "endedAt": "2026-10-07T08:57:12.962Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:57:13.382Z",
+      "endedAt": "2026-10-07T08:57:13.734Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T08:58:53.253Z",
+      "endedAt": "2026-10-07T09:03:25.942Z",
+      "duration": 272
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:03:42.369Z",
+      "endedAt": "2026-10-07T09:03:56.934Z",
+      "duration": 14
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:07:11.543Z",
+      "endedAt": "2026-10-07T09:12:37.222Z",
+      "duration": 325
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:12:40.597Z",
+      "endedAt": "2026-10-07T09:12:47.264Z",
+      "duration": 6
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:14:35.937Z",
+      "endedAt": "2026-10-07T09:15:08.475Z",
+      "duration": 32
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:18:04.454Z",
+      "endedAt": "2026-10-07T09:18:07.506Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:18:07.813Z",
+      "endedAt": "2026-10-07T09:18:08.091Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:18:08.443Z",
+      "endedAt": "2026-10-07T09:18:08.653Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:18:08.946Z",
+      "endedAt": "2026-10-07T09:18:09.239Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:18:09.891Z",
+      "endedAt": "2026-10-07T09:18:10.318Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:20:35.019Z",
+      "endedAt": "2026-10-07T09:20:42.726Z",
+      "duration": 7
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:20:48.770Z",
+      "endedAt": "2026-10-07T09:20:52.647Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:20:53.007Z",
+      "endedAt": "2026-10-07T09:20:59.473Z",
+      "duration": 6
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:20:59.870Z",
+      "endedAt": "2026-10-07T09:21:00.523Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:21:00.875Z",
+      "endedAt": "2026-10-07T09:21:04.880Z",
+      "duration": 4
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:24:39.369Z",
+      "endedAt": "2026-10-07T09:24:44.278Z",
+      "duration": 4
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:24:45.005Z",
+      "endedAt": "2026-10-07T09:24:46.273Z",
+      "duration": 1
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:26:34.865Z",
+      "endedAt": "2026-10-07T09:26:37.528Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:27:21.883Z",
+      "endedAt": "2026-10-07T09:27:24.207Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:28:25.208Z",
+      "endedAt": "2026-10-07T09:28:34.774Z",
+      "duration": 9
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:28:35.283Z",
+      "endedAt": "2026-10-07T09:28:39.642Z",
+      "duration": 4
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:28:40.084Z",
+      "endedAt": "2026-10-07T09:28:44.141Z",
+      "duration": 4
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:31:22.982Z",
+      "endedAt": "2026-10-07T09:31:26.580Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:31:28.616Z",
+      "endedAt": "2026-10-07T09:31:52.691Z",
+      "duration": 24
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:31:53.614Z",
+      "endedAt": "2026-10-07T09:31:55.728Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:32:57.997Z",
+      "endedAt": "2026-10-07T09:33:04.324Z",
+      "duration": 6
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:33:04.849Z",
+      "endedAt": "2026-10-07T09:33:05.224Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:33:05.591Z",
+      "endedAt": "2026-10-07T09:33:05.959Z",
+      "duration": 0
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:33:08.786Z",
+      "endedAt": "2026-10-07T09:33:09.955Z",
+      "duration": 1
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:38:51.553Z",
+      "endedAt": "2026-10-07T09:38:54.415Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:44:39.904Z",
+      "endedAt": "2026-10-07T09:44:50.813Z",
+      "duration": 10
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:45:17.753Z",
+      "endedAt": "2026-10-07T09:45:21.405Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:47:25.735Z",
+      "endedAt": "2026-10-07T09:48:09.351Z",
+      "duration": 43
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:48:12.681Z",
+      "endedAt": "2026-10-07T09:48:18.831Z",
+      "duration": 6
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:51:27.406Z",
+      "endedAt": "2026-10-07T09:51:39.729Z",
+      "duration": 12
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-07T09:54:23.877Z",
+      "endedAt": "2026-10-07T09:54:38.551Z",
+      "duration": 14
+    }
+  ],
+  "sales": [
+    {
+      "id": "1791362122626",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "name": "Nachos",
+          "price": 50,
+          "quantity": 1
+        },
+        {
+          "name": "Delicious Smoothie",
+          "price": 80,
+          "quantity": 1
+        },
+        {
+          "name": "Cider",
+          "price": 100,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 230,
+      "discount": 0,
+      "tax": 11.5,
+      "total": 241.5,
+      "createdAt": "2026-10-07T08:35:22.626Z"
+    },
+    {
+      "id": "1791363542268",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "name": "Beer",
+          "price": 120,
+          "quantity": 2
+        },
+        {
+          "name": "Cider",
+          "price": 100,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 340,
+      "discount": 0,
+      "tax": 17,
+      "total": 357,
+      "createdAt": "2026-10-07T08:59:02.268Z"
+    },
+    {
+      "id": "1791364035773",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "name": "Fries",
+          "price": 80,
+          "quantity": 1
+        },
+        {
+          "name": "Skittles",
+          "price": 45,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 125,
+      "discount": 0,
+      "tax": 6.25,
+      "total": 131.25,
+      "createdAt": "2026-10-07T09:07:15.773Z"
+    },
+    {
+      "id": "1791365491872",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "name": "Fries",
+          "price": 80,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 80,
+      "discount": 0,
+      "tax": 4,
+      "total": 84,
+      "createdAt": "2026-10-07T09:31:31.872Z"
+    },
+    {
+      "id": "1791366453711",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "name": "Nachos",
+          "price": 50,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 50,
+      "discount": 0,
+      "tax": 2.5,
+      "total": 52.5,
+      "createdAt": "2026-10-07T09:47:33.711Z"
+    }
+  ]
+}

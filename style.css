@@ -39,12 +39,10 @@ img {
    FIXED IRISH PUB BACKGROUND
 ===================================================== */
 
-/* Main background */
 body::before {
     content: "";
 
     position: fixed;
-
     top: 0;
     left: 0;
 
@@ -60,16 +58,16 @@ body::before {
         center center / cover no-repeat;
 
     z-index: -10;
-
     pointer-events: none;
 }
 
+
 /* Cinematic dark overlay */
+
 body::after {
     content: "";
 
     position: fixed;
-
     inset: 0;
 
     background:
@@ -80,7 +78,6 @@ body::after {
         );
 
     z-index: -9;
-
     pointer-events: none;
 }
 
@@ -122,7 +119,6 @@ body::after {
     padding: 0 5%;
 
     display: flex;
-
     align-items: center;
     justify-content: space-between;
 
@@ -140,7 +136,6 @@ body::after {
 
 .logo {
     display: flex;
-
     align-items: center;
 
     gap: 10px;
@@ -148,7 +143,6 @@ body::after {
     font-family: 'Cinzel', serif;
 
     font-size: 22px;
-
     font-weight: 700;
 
     letter-spacing: 2px;
@@ -158,13 +152,11 @@ body::after {
 
 .logo span {
     color: #c5a45d;
-
     font-size: 31px;
 }
 
 .navbar nav {
     display: flex;
-
     gap: 28px;
 }
 
@@ -174,7 +166,6 @@ body::after {
     color: #aaa;
 
     font-size: 10px;
-
     font-weight: 700;
 
     letter-spacing: 1.5px;
@@ -216,7 +207,6 @@ body::after {
     color: #c5a45d;
 
     font-size: 9px;
-
     font-weight: 800;
 
     letter-spacing: 1.5px;
@@ -226,7 +216,6 @@ body::after {
 
 .nav-button:hover {
     background: #c5a45d;
-
     color: #080a08;
 }
 
@@ -241,7 +230,6 @@ body::after {
     min-height: 100vh;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
@@ -260,7 +248,6 @@ body::after {
     content: "";
 
     position: absolute;
-
     inset: 0;
 
     background:
@@ -297,7 +284,6 @@ body::after {
     color: #c5a45d;
 
     font-size: 9px;
-
     font-weight: 700;
 
     letter-spacing: 3px;
@@ -366,7 +352,6 @@ body::after {
 
 .primary-button {
     background: #c5a45d;
-
     color: #080a08;
 }
 
@@ -541,10 +526,13 @@ body::after {
 
 .about-container {
     max-width: 1200px;
+
     margin: 0 auto;
 
     display: grid;
+
     grid-template-columns: 1fr 1fr;
+
     gap: 60px;
 
     align-items: center;
@@ -552,16 +540,18 @@ body::after {
 
 .about-content {
     width: 100%;
+
     text-align: left;
 }
-/* =========================
-   ABOUT IMAGE
-========================= */
+
+
+/* ABOUT IMAGE */
 
 .about-image {
     position: relative;
 
     width: 100%;
+
     height: 130%;
 
     padding: 8px;
@@ -578,9 +568,6 @@ body::after {
     overflow: hidden;
 }
 
-
-/* GOLD INNER BORDER */
-
 .about-image::before {
     content: "";
 
@@ -595,11 +582,9 @@ body::after {
     z-index: 2;
 }
 
-
-/* PHOTO */
-
 .about-image img {
     width: 100%;
+
     height: 100%;
 
     display: block;
@@ -612,19 +597,17 @@ body::after {
 }
 
 
-/* =========================
-   ABOUT CONTENT
-========================= */
+/* ABOUT CONTENT */
 
 .gold-label {
     color: #c5a45d;
 
     font-size: 9px;
+
     font-weight: 800;
 
     letter-spacing: 3px;
 }
-
 
 .about-content h3 {
     margin: 18px 0 25px;
@@ -636,11 +619,9 @@ body::after {
     line-height: 1.3;
 }
 
-
 .about-content h3 span {
     color: #c5a45d;
 }
-
 
 .about-content p {
     margin-bottom: 18px;
@@ -653,9 +634,7 @@ body::after {
 }
 
 
-/* =========================
-   ABOUT STATS
-========================= */
+/* ABOUT STATS */
 
 .about-stats {
     display: flex;
@@ -669,7 +648,6 @@ body::after {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-
 .about-stats strong {
     display: block;
 
@@ -679,7 +657,6 @@ body::after {
 
     font-size: 28px;
 }
-
 
 .about-stats span {
     display: block;
@@ -692,6 +669,8 @@ body::after {
 
     letter-spacing: 2px;
 }
+
+
 /* =====================================================
    MENU
 ===================================================== */
@@ -703,21 +682,62 @@ body::after {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
-    gap: 22px;
+    gap: 18px;
 }
 
-.menu-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(16, 21, 16, 0.92),
-            rgba(5, 9, 6, 0.95)
-        );
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+/* MENU CATEGORY */
+
+.menu-category-title {
+    max-width: 1250px;
+
+    margin: 55px auto 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.menu-category-title span {
+    color: #c5a45d;
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+.menu-category-title h3 {
+    color: #f1eee7;
+
+    font-family: 'Cinzel', serif;
+
+    font-size: 24px;
+
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+.drinks-title {
+    margin-top: 70px;
+}
+
+
+/* MENU CARD */
+
+.menu-card {
+    background: rgba(5, 10, 7, 0.55);
+
+    border: 1px solid rgba(197, 164, 93, 0.18);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 
     overflow: hidden;
 
@@ -725,50 +745,67 @@ body::after {
         transform 0.4s ease,
         border-color 0.4s ease,
         box-shadow 0.4s ease;
-
-    backdrop-filter: blur(6px);
 }
 
 .menu-card:hover {
-    transform:
-        translateY(-10px)
-        scale(1.01);
+    transform: translateY(-8px);
 
-    border-color:
-        rgba(197, 164, 93, 0.35);
+    background: rgba(5, 10, 7, 0.62);
+
+    border-color: rgba(197, 164, 93, 0.45);
 
     box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.4);
+        0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
+
+/* MENU IMAGE */
+
 .menu-image {
-    height: 260px;
+    width: 100%;
+
+    height: 190px;
+
+    overflow: hidden;
+
+    background: transparent !important;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(26, 38, 28, 0.95),
-            rgba(11, 15, 12, 0.95)
-        );
+    padding: 8px;
 }
 
-.menu-image-text {
-    color: rgba(197, 164, 93, 0.25);
+.menu-image img {
+    width: 100%;
 
-    font-family: 'Cinzel', serif;
+    height: 100%;
 
-    font-size: 14px;
+    object-fit: contain;
 
-    letter-spacing: 4px;
+    object-position: center;
+
+    display: block;
+
+    border: none;
+
+    outline: none;
+
+    transition: transform 0.35s ease;
 }
+
+.menu-card:hover .menu-image img {
+    transform: scale(1.03);
+}
+
+
+/* MENU INFO */
 
 .menu-info {
-    padding: 25px;
+    padding: 15px 16px 17px;
 }
 
 .menu-category {
@@ -778,31 +815,37 @@ body::after {
 
     font-weight: 800;
 
-    letter-spacing: 2px;
+    letter-spacing: 1.8px;
 }
 
 .menu-info h3 {
-    margin-top: 9px;
+    margin-top: 7px;
 
     font-family: 'Cinzel', serif;
 
-    font-size: 21px;
+    font-size: 17px;
+
+    line-height: 1.25;
+
+    font-weight: 600;
 }
 
 .menu-info p {
-    margin-top: 12px;
+    margin-top: 8px;
+
+    min-height: 34px;
 
     color: #888;
 
-    font-size: 11px;
+    font-size: 10px;
 
-    line-height: 1.8;
+    line-height: 1.6;
 }
 
 .menu-bottom {
-    margin-top: 20px;
+    margin-top: 12px;
 
-    padding-top: 16px;
+    padding-top: 11px;
 
     border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
@@ -812,110 +855,343 @@ body::after {
 
     font-family: 'Cinzel', serif;
 
-    font-size: 21px;
+    font-size: 18px;
+
+    font-weight: 600;
+}
+
+
+
+/* =====================================================
+   STAFF AREA
+   EACH STAFF IS INDEPENDENT
+   4 STAFF SIDE BY SIDE
+===================================================== */
+
+.staff-grid {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 25px;
+
+    align-items: start;
 }
 
 
 /* =====================================================
-   STAFF
+   INDIVIDUAL STAFF OUTER BOX
 ===================================================== */
 
-.staff-grid {
-    max-width: 1150px;
+.staff-box {
+    width: 100%;
+    min-width: 0;
 
-    margin: auto;
+    display: flex;
+    flex-direction: column;
 
-    display: grid;
+    background: transparent;
 
-    grid-template-columns:
-        repeat(4, 1fr);
+    overflow: visible;
 
-    gap: 18px;
+    /* IMPORTANT */
+    grid-column: auto;
 }
 
-.staff-card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(16, 21, 16, 0.92),
-            rgba(5, 9, 6, 0.95)
-        );
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+/* =====================================================
+   STAFF 1
+===================================================== */
+
+.staff-box-1 {
+    width: 100%;
+}
+
+.staff-photo-1 {
+    width: 100%;
+    height: 300px;
+}
+
+.staff-info-1 {
+    width: 100%;
+    min-height: 145px;
+}
+
+
+/* =====================================================
+   STAFF 2 - AKASH
+===================================================== */
+
+.staff-box-2 {
+    width: 100%;
+}
+
+.staff-photo-2 {
+    width: 100%;
+    height: 300px;
+}
+
+.staff-info-2 {
+    width: 100%;
+    min-height: 145px;
+}
+
+
+/* =====================================================
+   STAFF 3
+===================================================== */
+
+.staff-box-3 {
+    width: 100%;
+}
+
+.staff-photo-3 {
+    width: 100%;
+    height: 300px;
+}
+
+.staff-info-3 {
+    width: 100%;
+    min-height: 145px;
+}
+
+
+/* =====================================================
+   STAFF 4
+===================================================== */
+
+.staff-box-4 {
+    width: 100%;
+}
+
+.staff-photo-4 {
+    width: 100%;
+    height: 300px;
+}
+
+.staff-info-4 {
+    width: 100%;
+    min-height: 145px;
+}
+
+
+/* =====================================================
+   PHOTO BOX
+===================================================== */
+
+.staff-photo-box {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 
     overflow: hidden;
 
-    transition:
-        transform 0.4s ease,
-        border-color 0.4s ease;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,37,28,.95),
+            rgba(8,11,9,.95)
+        );
 
-    backdrop-filter: blur(6px);
+    border: 1px solid rgba(197,164,93,.18);
+
+    box-sizing: border-box;
 }
 
-.staff-card:hover {
-    transform:
-        translateY(-10px)
-        scale(1.01);
 
-    border-color:
-        rgba(197, 164, 93, 0.35);
+/* =====================================================
+   STAFF IMAGE
+===================================================== */
+
+.staff-photo-box img {
+    width: 100%;
+    height: 100%;
+
+    max-width: none;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    margin: 0;
+    padding: 0;
+
+    transition: transform .35s ease;
 }
 
-.staff-photo {
-    height: 350px;
 
-    display: flex;
+/* =====================================================
+   INFORMATION BOX
+===================================================== */
 
-    align-items: center;
-    justify-content: center;
+.staff-info-box {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
 
     background:
         linear-gradient(
             145deg,
-            rgba(25, 37, 28, 0.95),
-            rgba(8, 11, 9, 0.95)
+            rgba(16,21,16,.95),
+            rgba(5,9,6,.98)
         );
 
-    color: rgba(197, 164, 93, 0.3);
+    border: 1px solid rgba(197,164,93,.16);
 
-    font-family: 'Cinzel', serif;
-
-    font-size: 10px;
-
-    letter-spacing: 2px;
+    overflow: visible;
 }
 
-.staff-info {
-    padding: 23px;
-}
 
-.staff-role {
+/* =====================================================
+   ROLE
+===================================================== */
+
+.staff-info-box .staff-role {
+    display: block;
+
     color: #c5a45d;
 
     font-size: 8px;
-
     font-weight: 800;
 
     letter-spacing: 2px;
 }
 
-.staff-info h3 {
+
+/* =====================================================
+   NAME
+===================================================== */
+
+.staff-info-box h3 {
     margin-top: 8px;
+
+    color: #f1eee7;
 
     font-family: 'Cinzel', serif;
 
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.25;
 }
 
-.staff-info p {
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.staff-info-box p {
     margin-top: 8px;
 
     color: #777;
 
     font-size: 10px;
+
+    line-height: 1.6;
 }
 
 
+/* =====================================================
+   HOVER - EACH STAFF INDEPENDENT
+===================================================== */
+
+.staff-box-1:hover .staff-photo-1 img {
+    transform: scale(1.03);
+}
+
+.staff-box-2:hover .staff-photo-2 img {
+    transform: scale(1.03);
+}
+
+.staff-box-3:hover .staff-photo-3 img {
+    transform: scale(1.03);
+}
+
+.staff-box-4:hover .staff-photo-4 img {
+    transform: scale(1.03);
+}
+
+
+/* =====================================================
+   DESKTOP
+   4 STAFF SIDE BY SIDE
+===================================================== */
+
+@media (min-width: 1051px) {
+
+    .staff-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 25px;
+    }
+
+    .staff-box-1,
+    .staff-box-2,
+    .staff-box-3,
+    .staff-box-4 {
+        width: 100%;
+    }
+}
+
+
+/* =====================================================
+   TABLET
+   2 STAFF SIDE BY SIDE
+===================================================== */
+
+@media (max-width: 1050px) {
+
+    .staff-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px;
+    }
+
+    .staff-box-1,
+    .staff-box-2,
+    .staff-box-3,
+    .staff-box-4 {
+        width: 100%;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+   1 STAFF PER ROW
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .staff-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .staff-box-1,
+    .staff-box-2,
+    .staff-box-3,
+    .staff-box-4 {
+        width: 100%;
+    }
+
+    .staff-photo-1,
+    .staff-photo-2,
+    .staff-photo-3,
+    .staff-photo-4 {
+        height: 360px;
+    }
+}
 /* =====================================================
    GALLERY
 ===================================================== */
@@ -927,8 +1203,7 @@ body::after {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     grid-auto-rows: 250px;
 
@@ -936,19 +1211,23 @@ body::after {
 }
 
 .gallery-item {
+    position: relative;
+
+    width: 100%;
+
+    height: 100%;
+
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(24, 34, 25, 0.95),
-            rgba(9, 12, 10, 0.95)
-        );
+    overflow: hidden;
 
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(10, 15, 11, 0.35);
+
+    border: 1px solid rgba(197, 164, 93, 0.15);
 
     color: rgba(197, 164, 93, 0.25);
 
@@ -958,15 +1237,40 @@ body::after {
 
     letter-spacing: 3px;
 
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+
     transition: 0.4s;
 }
 
-.gallery-item:hover {
-    transform:
-        scale(1.01);
+.gallery-item img {
+    width: 100%;
 
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: center;
+
+    margin: 0;
+
+    padding: 0;
+
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.03);
+}
+
+.gallery-item:hover {
     border-color:
-        rgba(197, 164, 93, 0.35);
+        rgba(197, 164, 93, 0.4);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-large {
@@ -989,8 +1293,7 @@ body::after {
 
     display: grid;
 
-    grid-template-columns:
-        0.8fr 1.2fr;
+    grid-template-columns: 0.8fr 1.2fr;
 
     gap: 65px;
 
@@ -1061,6 +1364,7 @@ body::after {
 
 .benefit > span {
     width: 28px;
+
     height: 28px;
 
     flex-shrink: 0;
@@ -1068,6 +1372,7 @@ body::after {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     border: 1px solid rgba(197, 164, 93, 0.35);
@@ -1101,6 +1406,7 @@ body::after {
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 14px;
@@ -1159,7 +1465,8 @@ body::after {
 .form-header {
     padding: 30px 35px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
 }
 
 .form-header span {
@@ -1226,7 +1533,8 @@ body::after {
 
     background: rgba(8, 10, 8, 0.9);
 
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 
     outline: none;
 
@@ -1249,7 +1557,8 @@ body::after {
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: rgba(197, 164, 93, 0.6);
+    border-color:
+        rgba(197, 164, 93, 0.6);
 
     box-shadow:
         0 0 0 2px rgba(197, 164, 93, 0.05);
@@ -1278,6 +1587,7 @@ body::after {
 
 .application-check input {
     width: 15px;
+
     height: 15px;
 
     accent-color: #c5a45d;
@@ -1293,6 +1603,7 @@ body::after {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     border: none;
@@ -1361,18 +1672,20 @@ body::after {
 
     display: grid;
 
-    grid-template-columns:
-        repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top:
+        1px solid rgba(255, 255, 255, 0.08);
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
 }
 
 .contact-info div {
     padding: 30px 15px;
 
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right:
+        1px solid rgba(255, 255, 255, 0.08);
 }
 
 .contact-info div:last-child {
@@ -1414,7 +1727,8 @@ footer {
     background:
         rgba(5, 7, 5, 0.92);
 
-    border-top: 1px solid rgba(197, 164, 93, 0.12);
+    border-top:
+        1px solid rgba(197, 164, 93, 0.12);
 
     z-index: 2;
 }
@@ -1448,7 +1762,8 @@ footer p {
 
     margin: 25px auto;
 
-    background: rgba(197, 164, 93, 0.35);
+    background:
+        rgba(197, 164, 93, 0.35);
 }
 
 footer small {
@@ -1506,7 +1821,7 @@ footer small {
    TABLET
 ===================================================== */
 
-@media (max-width: 1050px) {
+@media (max-width: 1100px) {
 
     .navbar {
         padding: 0 3%;
@@ -1521,13 +1836,32 @@ footer small {
     }
 
     .menu-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .staff-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =====================================================
+   TABLET SMALL
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu-image {
+        height: 160px;
+    }
+
+    .staff-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
 }
@@ -1583,27 +1917,60 @@ footer small {
 
     .about-image {
         min-height: 380px;
-    }
 
-    .about-image-content {
-        height: 355px;
+        height: auto;
     }
 
     .menu-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 12px;
     }
+
+    .menu-image {
+        height: 135px;
+    }
+
+    .menu-info {
+        padding: 12px;
+    }
+
+    .menu-info h3 {
+        font-size: 15px;
+    }
+
+    .menu-info p {
+        font-size: 9px;
+
+        min-height: 30px;
+    }
+
+    .price {
+        font-size: 16px;
+    }
+
+    /* STAFF MOBILE */
 
     .staff-grid {
         grid-template-columns: 1fr;
     }
 
     .staff-photo {
-        height: 420px;
+        height: 360px;
+
+        min-height: 360px;
+
+        max-height: 360px;
+    }
+
+    .staff-photo img {
+        object-fit: contain;
+
+        object-position: center bottom;
     }
 
     .gallery-grid {
-        grid-template-columns:
-            1fr 1fr;
+        grid-template-columns: 1fr 1fr;
 
         grid-auto-rows: 180px;
     }
@@ -1674,6 +2041,14 @@ footer small {
 
     .application-info h3 {
         font-size: 27px;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-image {
+        height: 180px;
     }
 
     .apply-now-button {
