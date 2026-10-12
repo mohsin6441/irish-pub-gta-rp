@@ -822,3 +822,52 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 });
+/* ===== IRISH PUB INDIVIDUAL 3D FOOD CARDS ===== */
+
+document.querySelectorAll("#menu .menu-grid").forEach((grid) => {
+    const cards = grid.querySelectorAll(".menu-card");
+
+    cards.forEach((card) => {
+        card.style.position = "relative";
+        card.style.left = "auto";
+        card.style.top = "auto";
+        card.style.opacity = "1";
+        card.style.pointerEvents = "auto";
+        card.style.transformStyle = "preserve-3d";
+
+        let startX = 0;
+        let startY = 0;
+        let dragging = false;
+
+        card.addEventListener("pointerdown", (e) => {
+            startX = e.clientX;
+            startY = e.clientY;
+            dragging = true;
+        });
+
+        card.addEventListener("pointermove", (e) => {
+            if (!dragging) return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+
+            const rotateY = Math.max(-25, Math.min(25, dx * 0.5));
+            const rotateX = Math.max(-15, Math.min(15, -dy * 0.4));
+
+            card.style.transform =
+                `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+        });
+
+        function resetCard() {
+            dragging = false;
+            card.style.transform =
+                "perspective(900px) rotateX(0deg) rotateY(0deg)";
+        }
+
+        card.addEventListener("pointerup", resetCard);
+        card.addEventListener("pointercancel", resetCard);
+        card.addEventListener("pointerleave", () => {
+            if (dragging) resetCard();
+        });
+    });
+});

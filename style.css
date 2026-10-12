@@ -671,89 +671,138 @@ body::after {
    MENU
 ===================================================== */
 
-.menu-grid {
-    max-width: 1250px;
+/* ===== IRISH PUB 3D CURVED MENU ===== */
 
-    margin: auto;
-
-    display: grid;
-
-    grid-template-columns: repeat(4, 1fr);
-
-    gap: 18px;
-}
-
-
-/* MENU CATEGORY */
-
-.menu-category-title {
-    max-width: 1250px;
-
-    margin: 55px auto 22px;
-
+#menu .menu-grid {
     display: flex;
-
+    justify-content: center;
     align-items: center;
+    gap: 14px;
 
-    gap: 12px;
+    overflow: visible;
+    flex-wrap: nowrap;
+
+    padding: 65px 15px;
+    margin: 20px 0 40px;
+
+    perspective: 1200px;
 }
 
-.menu-category-title span {
-    color: #c5a45d;
+/* 3D Cards */
 
-    font-family: 'Cinzel', serif;
+#menu .menu-card {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 180px;
 
-    font-size: 12px;
+    margin: 0;
+    position: relative;
 
-    letter-spacing: 2px;
-}
-
-.menu-category-title h3 {
-    color: #f1eee7;
-
-    font-family: 'Cinzel', serif;
-
-    font-size: 24px;
-
-    font-weight: 600;
-
-    letter-spacing: 2px;
-}
-
-.drinks-title {
-    margin-top: 70px;
-}
-
-
-/* MENU CARD */
-
-.menu-card {
-    background: rgba(5, 10, 7, 0.55);
-
-    border: 1px solid rgba(197, 164, 93, 0.18);
-
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-
+    border-radius: 14px;
     overflow: hidden;
 
-    transition:
-        transform 0.4s ease,
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+
+    background: rgba(12, 18, 14, 0.9);
+    border: 1px solid rgba(200, 164, 92, 0.4);
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
 }
 
-.menu-card:hover {
-    transform: translateY(-8px);
+/* Arc / Curve Shape */
 
-    background: rgba(5, 10, 7, 0.62);
-
-    border-color: rgba(197, 164, 93, 0.45);
-
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.35);
+#menu .menu-card:nth-child(6n + 1) {
+    transform: translateY(42px) rotateY(18deg) rotateZ(-3deg);
 }
 
+#menu .menu-card:nth-child(6n + 2) {
+    transform: translateY(22px) rotateY(12deg) rotateZ(-2deg);
+}
+
+#menu .menu-card:nth-child(6n + 3) {
+    transform: translateY(5px) rotateY(6deg);
+}
+
+#menu .menu-card:nth-child(6n + 4) {
+    transform: translateY(5px) rotateY(-6deg);
+}
+
+#menu .menu-card:nth-child(6n + 5) {
+    transform: translateY(22px) rotateY(-12deg) rotateZ(2deg);
+}
+
+#menu .menu-card:nth-child(6n + 6) {
+    transform: translateY(42px) rotateY(-18deg) rotateZ(3deg);
+}
+
+/* Images */
+
+#menu .menu-image {
+    width: 100%;
+    height: 125px;
+    overflow: hidden;
+}
+
+#menu .menu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Text */
+
+#menu .menu-info {
+    padding: 12px 8px;
+    text-align: center;
+}
+
+#menu .menu-info h3 {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+#menu .menu-info p {
+    font-size: 11px;
+}
+
+#menu .price {
+    color: #d8b56b;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+/* Hover 3D */
+
+@media (hover: hover) {
+    #menu .menu-card:hover {
+        transform: translateY(-12px) rotateY(0deg) rotateZ(0deg) scale(1.06);
+        border-color: #d8b56b;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+        z-index: 5;
+    }
+
+    #menu .menu-card:hover .menu-image img {
+        transform: scale(1.08);
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    #menu .menu-grid {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 35px 15px;
+        gap: 12px;
+    }
+
+    #menu .menu-card {
+        flex: 0 0 155px;
+    }
+}
 
 /* MENU IMAGE */
 
@@ -3642,4 +3691,196 @@ img.image-loaded {
 .submit-button:disabled {
     opacity: 0.65;
     cursor: not-allowed;
+}
+/* =========================================
+   IRISH PUB — CURVED MENU ITEMS
+========================================= */
+
+#menu .menu-grid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 35px 25px 45px;
+    margin: 25px 0 45px;
+
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c8a45c #172019;
+}
+
+/* Individual Item */
+
+#menu .menu-card {
+    flex: 0 0 210px;
+    width: 210px;
+    min-width: 0;
+
+    margin: 0;
+    scroll-snap-align: center;
+
+    border: 1px solid rgba(200, 164, 92, 0.35);
+    border-radius: 14px;
+    overflow: hidden;
+
+    background: rgba(12, 18, 14, 0.82);
+
+    transition:
+        transform 0.35s ease,
+        border-color 0.35s ease;
+}
+
+/* Curve effect */
+
+#menu .menu-card:nth-child(6n + 1),
+#menu .menu-card:nth-child(6n + 6) {
+    transform: translateY(22px);
+}
+
+#menu .menu-card:nth-child(6n + 2),
+#menu .menu-card:nth-child(6n + 5) {
+    transform: translateY(10px);
+}
+
+#menu .menu-card:nth-child(6n + 3),
+#menu .menu-card:nth-child(6n + 4) {
+    transform: translateY(-2px);
+}
+
+/* Item Image */
+
+#menu .menu-image {
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+}
+
+#menu .menu-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    display: block;
+
+    transition: transform 0.4s ease;
+}
+
+/* Item Information */
+
+#menu .menu-info {
+    padding: 14px;
+}
+
+#menu .menu-info h3 {
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 8px 0;
+}
+
+#menu .menu-info p {
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Gold Price */
+
+#menu .price {
+    color: #d8b56b;
+    font-size: 19px;
+    font-weight: 800;
+}
+
+/* Hover Effect */
+
+@media (hover: hover) {
+    #menu .menu-card:hover {
+        transform: translateY(-8px) scale(1.025);
+        border-color: #d8b56b;
+    }
+
+    #menu .menu-card:hover .menu-image img {
+        transform: scale(1.08);
+    }
+}
+
+/* Category Headings */
+
+#menu .menu-category-title {
+    margin-top: 45px;
+}
+
+#menu .menu-category-title h3 {
+    color: #d8b56b;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+/* Mobile Responsive */
+
+@media (max-width: 600px) {
+    #menu .menu-grid {
+        gap: 14px;
+        padding: 25px 15px 35px;
+    }
+
+    #menu .menu-card {
+        flex-basis: 175px;
+        width: 175px;
+    }
+
+    #menu .menu-image {
+        height: 125px;
+    }
+
+    #menu .menu-info {
+        padding: 11px;
+    }
+}
+/* ===== IRISH PUB 3D FOOD IMAGE ROTATION ===== */
+
+#menu .menu-image {
+    perspective: 1000px;
+    overflow: visible;
+}
+
+#menu .menu-image img {
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease;
+    will-change: transform;
+}
+
+/* Image smoothly returns to normal */
+#menu .menu-card .menu-image img {
+    animation: foodFloat 3s ease-in-out infinite;
+}
+
+@keyframes foodFloat {
+    0%, 100% {
+        transform: perspective(800px) rotateY(-8deg) rotateX(3deg);
+    }
+
+    50% {
+        transform: perspective(800px) rotateY(8deg) rotateX(-3deg);
+    }
+}
+
+/* Mouse movement gives a 3D effect */
+@media (hover: hover) {
+    #menu .menu-card:hover .menu-image img {
+        animation-play-state: paused;
+        transform: perspective(800px) rotateY(18deg) rotateX(8deg) scale(1.08);
+    }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    #menu .menu-card .menu-image img {
+        animation: none;
+    }
 }

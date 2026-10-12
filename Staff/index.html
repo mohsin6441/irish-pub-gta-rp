@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irish Pub | Staff Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="background-glow"></div>
+
+   <!-- LOGIN & SIGNUP -->
+<section id="authScreen" class="auth-screen">
+    <div class="auth-card">
+
+        <div class="brand-icon">☘</div>
+
+        <p class="eyebrow">LOS SANTOS • EST. 2026</p>
+        <h1>IRISH <span>PUB</span></h1>
+        <p class="muted">Staff Management Portal</p>
+
+        <!-- LOGIN FORM -->
+        <form id="authForm">
+
+            <label for="email">Gmail Address</label>
+            <input
+                id="email"
+                type="email"
+                placeholder="yourname@gmail.com"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                id="password"
+                type="password"
+                placeholder="Enter password"
+                minlength="6"
+                required
+            >
+
+            <button id="authButton" class="primary-btn" type="submit">
+                LOGIN
+            </button>
+
+        </form>
+
+        <!-- SIGNUP FORM -->
+        <!-- SIGNUP FORM -->
+
+<form id="signupForm" class="hidden signup-grid">
+
+<div class="signup-field">
+    <label for="signupRealName">Name:</label>
+    <input
+        id="signupRealName"
+        type="text"
+        placeholder="Enter your real name"
+        required
+    >
+</div>
+
+<div class="signup-field">
+    <label for="signupCityName">In-City Name:</label>
+    <input
+        id="signupCityName"
+        type="text"
+        placeholder="Your GTA RP name"
+        required
+    >
+</div>
+
+<div class="signup-field">
+    <label for="signupCID">CID:</label>
+    <input
+        id="signupCID"
+        type="text"
+        placeholder="Enter your CID"
+        required
+    >
+</div>
+
+<div class="signup-field">
+    <label for="signupCityNumber">In-City Number:</label>
+    <input
+        id="signupCityNumber"
+        type="text"
+        placeholder="Enter your phone number"
+        required
+    >
+</div>
+
+<div class="signup-field">
+    <label for="signupDiscord">Discord User:</label>
+    <input
+        id="signupDiscord"
+        type="text"
+        placeholder="Enter Discord username"
+        required
+    >
+</div>
+
+<div class="signup-field">
+    <label for="signupEmail">Gmail Address:</label>
+    <input
+        id="signupEmail"
+        type="email"
+        placeholder="yourname@gmail.com"
+        required
+    >
+</div>
+
+<div class="signup-field signup-password">
+    <label for="signupPassword">Password:</label>
+    <input
+        id="signupPassword"
+        type="password"
+        placeholder="Create a password"
+        minlength="6"
+        required
+    >
+</div>
+
+<button
+    id="signupButton"
+    class="primary-btn signup-submit"
+    type="submit"
+>
+    CREATE ACCOUNT
+</button>
+
+
+</form>
+
+
+        <p id="authMessage" class="message"></p>
+
+        <p class="auth-switch">
+            <span id="authSwitchText">New staff?</span>
+
+            <button
+                id="showSignup"
+                type="button"
+                class="text-btn"
+            >
+                Create account
+            </button>
+
+            <button
+                id="showLogin"
+                type="button"
+                class="text-btn hidden"
+            >
+                Back to Login
+            </button>
+        </p>
+
+        <p class="small-note">
+            Only staff members approved by the owner can access the portal.
+        </p>
+
+    </div>
+</section>
+
+    <!-- MAIN APP -->
+    <div id="appScreen" class="app hidden">
+
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <span class="brand-icon small">☘</span>
+                <div>
+                    <h2>IRISH PUB</h2>
+                    <small>STAFF PORTAL</small>
+                </div>
+            </div>
+
+            <div class="staff-profile">
+                <div class="avatar">S</div>
+                <div>
+                    <strong id="staffEmail">Staff</strong>
+                    <small id="staffRole">Staff Member</small>
+                </div>
+            </div>
+
+            <nav class="navigation">
+                <button class="nav-btn active" data-page="home">⌂ Home</button>
+                <button class="nav-btn" data-page="food">♨ Food & Drinks</button>
+                <button class="nav-btn" data-page="sales">▤ Sales History</button>
+                <button class="nav-btn" data-page="dashboard">◫ Dashboard</button>
+            </nav>
+
+            <button id="logoutButton" class="logout-btn">↪ Logout</button>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">IRISH PUB MANAGEMENT</p>
+                    <h1 id="pageTitle">Welcome Back!</h1>
+                </div>
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    Staff Portal
+                </div>
+            </header>
+
+            <!-- HOME -->
+            <section id="page-home" class="page">
+                <div class="welcome-card">
+                    <div>
+                        <p class="eyebrow">GOOD TO SEE YOU</p>
+                        <h2>Your shift. Your sales. Your team.</h2>
+                        <p>Keep track of your working hours and sales.</p>
+                    </div>
+                    <div class="welcome-symbol">☘</div>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <span>SHIFT STATUS</span>
+                        <h2 id="shiftStatus">OFF DUTY</h2>
+                        <p id="shiftStarted">Start your shift when ready.</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>SHIFT TIMER</span>
+                        <h2 id="shiftTimer">00:00:00</h2>
+                        <p>Current working time</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>TODAY'S SALES</span>
+                        <h2 id="homeSales">RM 0.00</h2>
+                        <p>Your recorded sales</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>TODAY'S WORK TIME</span>
+                        <h2 id="homeHours">0h 0m</h2>
+                        <p>Total recorded shift time</p>
+                    </article>
+                </div>
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">WORK SESSION</p>
+                        <h2>Manage Your Shift</h2>
+                    </div>
+                </div>
+
+                <div class="shift-card">
+                    <div>
+                        <h3>Ready to work?</h3>
+                        <p>Start your shift before handling sales.</p>
+                    </div>
+                    <div class="shift-actions">
+                        <button id="startShift" class="primary-btn">
+                            START SHIFT
+                        </button>
+                        <button id="endShift" class="danger-btn">
+                            END SHIFT
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">RECENT ACTIVITY</p>
+                        <h2>Recent Sales</h2>
+                    </div>
+                    <button class="text-btn" data-goto="sales">
+                        View All →
+                    </button>
+                </div>
+
+                <div id="recentSales" class="table-wrap">
+                    <p class="empty-state">No sales recorded yet.</p>
+                </div>
+            </section>
+
+            <!-- FOOD AND DRINKS -->
+            <section id="page-food" class="page hidden">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">IRISH PUB MENU</p>
+                        <h2>Food & Drinks</h2>
+                        <p class="muted">Select items and add them to your cart.</p>
+                    </div>
+                </div>
+
+                <div class="shop-layout">
+                    <div>
+                        <div class="filter-row">
+                            <button class="filter-btn active" data-filter="All">
+                                All Items
+                            </button>
+                            <button class="filter-btn" data-filter="Food">
+                                Food
+                            </button>
+                            <button class="filter-btn" data-filter="Drinks">
+                                Drinks
+                            </button>
+                        </div>
+
+                        <div id="menuGrid" class="menu-grid"></div>
+                    </div>
+
+                    <aside class="cart-panel">
+                        <div class="cart-title">
+                            <h2>Current Order</h2>
+                            <span id="cartCount" class="cart-count">0</span>
+                        </div>
+
+                        <div id="cartItems" class="cart-items">
+                            <p class="empty-state">Your cart is empty.</p>
+                        </div>
+
+                        <div class="cart-summary">
+                            <div>
+                                <span>Subtotal</span>
+                                <strong id="cartSubtotal">RM 0.00</strong>
+                            </div>
+                            <div>
+                                <span>Tax (5%)</span>
+                                <strong id="cartTax">RM 0.00</strong>
+                            </div>
+                            <div class="grand-total">
+                                <span>Total</span>
+                                <strong id="cartTotal">RM 0.00</strong>
+                            </div>
+                        </div>
+
+                        <button id="checkoutButton" class="primary-btn full-btn">
+                            COMPLETE SALE
+                        </button>
+                        <button id="clearCart" class="clear-btn">
+                            Clear Cart
+                        </button>
+
+                        <p id="checkoutMessage" class="message"></p>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- SALES HISTORY -->
+            <section id="page-sales" class="page hidden">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">YOUR RECORDS</p>
+                        <h2>Sales History</h2>
+                    </div>
+                    <button id="refreshSales" class="secondary-btn">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div id="salesSummary" class="summary-strip">
+                    <div>
+                        <span>Total Sales</span>
+                        <strong id="historyTotal">RM 0.00</strong>
+                    </div>
+                    <div>
+                        <span>Transactions</span>
+                        <strong id="historyCount">0</strong>
+                    </div>
+                </div>
+
+                <div id="salesTable" class="table-wrap">
+                    <p class="empty-state">No sales recorded yet.</p>
+                </div>
+            </section>
+
+            <!-- DASHBOARD -->
+            <section id="page-dashboard" class="page hidden">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">PERSONAL PERFORMANCE</p>
+                        <h2>My Dashboard</h2>
+                        <p class="muted">
+                            Your personal sales and working time.
+                        </p>
+                    </div>
+                    <button id="refreshDashboard" class="secondary-btn">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <span>TOTAL SALES</span>
+                        <h2 id="dashboardSales">RM 0.00</h2>
+                        <p>Your recorded sales</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>TOTAL WORK TIME</span>
+                        <h2 id="dashboardHours">0h 0m</h2>
+                        <p>Recorded working time</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>TOTAL TRANSACTIONS</span>
+                        <h2 id="dashboardTransactions">0</h2>
+                        <p>Completed orders</p>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>CURRENT STATUS</span>
+                        <h2 id="dashboardShift">OFF DUTY</h2>
+                        <p>Your current shift</p>
+                    </article>
+                </div>
+
+                <div class="notice-card">
+                    <span>☘</span>
+                    <div>
+                        <h3>Keep up the good work!</h3>
+                        <p>Your dashboard displays only your own staff records.</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                IRISH PUB • DEVELOPED BY MOHSIN
+            </footer>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="script.js" defer></script>
+</body>
+</html>

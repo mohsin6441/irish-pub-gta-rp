@@ -3,7 +3,8 @@
     {
       "name": "Mohsin",
       "username": "mohsin",
-      "role": "Manager"
+      "role": "Owner",
+      "email": "mohsin644774@gmail.com"
     },
     {
       "name": "Manager",
@@ -351,6 +352,69 @@
       "startedAt": "2026-10-07T09:54:23.877Z",
       "endedAt": "2026-10-07T09:54:38.551Z",
       "duration": 14
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T05:17:18.675Z",
+      "endedAt": "2026-10-12T05:18:00.860Z",
+      "duration": 42
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T05:18:04.357Z",
+      "endedAt": "2026-10-12T06:57:57.387Z",
+      "duration": 5993
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T07:07:16.420Z",
+      "endedAt": "2026-10-12T07:07:19.099Z",
+      "duration": 2
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T07:07:29.139Z",
+      "endedAt": "2026-10-12T07:08:55.748Z",
+      "duration": 86
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T08:54:52.284Z",
+      "endedAt": "2026-10-12T08:54:55.539Z",
+      "duration": 3
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T08:55:06.933Z",
+      "endedAt": "2026-10-12T09:01:37.601Z",
+      "duration": 390
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T09:02:27.210Z",
+      "endedAt": "2026-10-12T09:02:46.332Z",
+      "duration": 19
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T09:19:03.921Z",
+      "endedAt": "2026-10-12T09:23:20.045Z",
+      "duration": 256
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-12T09:26:22.542Z",
+      "endedAt": "2026-10-12T10:43:13.244Z",
+      "duration": 4610
     }
   ],
   "sales": [
@@ -458,6 +522,120 @@
       "tax": 2.5,
       "total": 52.5,
       "createdAt": "2026-10-07T09:47:33.711Z"
+    },
+    {
+      "id": "42692b88-648f-4af4-9908-3264ebb03449",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "id": "smores",
+          "name": "S'mores",
+          "price": 40,
+          "quantity": 1
+        },
+        {
+          "id": "skittles",
+          "name": "Skittles",
+          "price": 45,
+          "quantity": 1
+        },
+        {
+          "id": "toyto-chips",
+          "name": "Toyto Chips",
+          "price": 20,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 105,
+      "discount": 0,
+      "tax": 5.25,
+      "total": 110.25,
+      "createdAt": "2026-10-12T08:55:10.451Z"
+    },
+    {
+      "id": "96612550-24b5-4704-884b-3fbedd2392fa",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "id": "skittles",
+          "name": "Skittles",
+          "price": 45,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 45,
+      "discount": 0,
+      "tax": 2.25,
+      "total": 47.25,
+      "createdAt": "2026-10-12T09:01:22.763Z"
+    },
+    {
+      "id": "d46539a0-3bec-4298-9513-f849d74c040c",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "id": "smores",
+          "name": "S'mores",
+          "price": 40,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 40,
+      "discount": 0,
+      "tax": 2,
+      "total": 42,
+      "createdAt": "2026-10-12T09:02:38.861Z"
+    },
+    {
+      "id": "3389a90e-7950-4b7a-bb27-ad8b71d352f1",
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "items": [
+        {
+          "id": "skittles",
+          "name": "Skittles",
+          "price": 45,
+          "quantity": 1
+        },
+        {
+          "id": "smores",
+          "name": "S'mores",
+          "price": 40,
+          "quantity": 1
+        },
+        {
+          "id": "ham-sandwich",
+          "name": "Ham Sandwich",
+          "price": 60,
+          "quantity": 1
+        },
+        {
+          "id": "jameson",
+          "name": "Jameson",
+          "price": 180,
+          "quantity": 1
+        },
+        {
+          "id": "vodka",
+          "name": "Vodka",
+          "price": 90,
+          "quantity": 1
+        },
+        {
+          "id": "tequila",
+          "name": "Tequila",
+          "price": 80,
+          "quantity": 1
+        }
+      ],
+      "subtotal": 495,
+      "discount": 0,
+      "tax": 24.75,
+      "total": 519.75,
+      "createdAt": "2026-10-12T09:19:33.395Z"
     }
   ]
 }

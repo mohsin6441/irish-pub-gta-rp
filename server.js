@@ -1,105 +1,171 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const crypto = require("crypto");
 require("dotenv").config();
+
+const {
+    initializeApp,
+    applicationDefault,
+    cert,
+    getApps
+} = require("firebase-admin/app");
+
+const { getAuth } = require("firebase-admin/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-/* =========================================================
-   MIDDLEWARE
-========================================================= */
+// ========================================================
+// CONFIGURATION
+// ========================================================
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-/* PUBLIC IRISH PUB WEBSITE */
-app.use(express.static(__dirname));
-
-/* STAFF MANAGEMENT WEBSITE */
-app.use(
-    "/staff",
-    express.static(path.join(__dirname, "staff"))
-);
-
-
-/* =========================================================
-   DATA FILE
-========================================================= */
+const OWNER_EMAIL = (
+    process.env.OWNER_EMAIL || "mohsin644774@gmail.com"
+).trim().toLowerCase();
 
 const DATA_FILE = path.join(__dirname, "irish-pub-data.json");
 
+const ALLOWED_ROLES = ["Owner", "Manager", "Staff"];
 
-/* =========================================================
-   DEFAULT STAFF
-========================================================= */
+const STAFF_DEFAULTS = [
+    {
+        name: "Mohsin",
+        username: "mohsin",
+        role: "Developer",
+        email: OWNER_EMAIL
+    },
+    {
+        name: "Manager",
+        username: "manager",
+        role: "Manager"
+    },
+    {
+        name: "Alison Burgurs",
+        username: "alison",
+        role: "Staff"
+    },
+    {
+        name: "Staff 2",
+        username: "staff2",
+        role: "Staff"
+    }
+];
+
+// ========================================================
+// FIREBASE ADMIN INITIALIZATION
+// ========================================================
+
+function initializeFirebase() {
+    if (getApps().length > 0) {
+        return getApps()[0];
+    }
+
+    const projectId =
+        process.env.FIREBASE_PROJECT_ID || "irish-pub-staff";
+
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+        const serviceAccount = JSON.parse(
+            process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+        );
+
+        return initializeApp({
+            credential: cert(serviceAccount),
+            projectId
+        });
+    }
+
+    if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+        return initializeApp({
+            credential: applicationDefault(),
+            projectId
+        });
+    }
+
+    return initializeApp({
+        credential: applicationDefault(),
+        projectId
+    });
+}
+
+let firebaseAuth;
+
+try {
+    firebaseAuth = getAuth(initializeFirebase());
+    console.log("Firebase Admin initialized.");
+} catch (error) {
+    console.error("Firebase initialization error:", error.message);
+    process.exit(1);
+}
+
+// ========================================================
+// MIDDLEWARE
+// ========================================================
+
+app.disable("x-powered-by");
+
+app.use(express.json({ limit: "100kb" }));
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
+
+// ========================================================
+// DEFAULT DATA
+// ========================================================
 
 const defaultData = {
-
-    staff: [
-        {
-            name: "Mohsin",
-            username: "mohsin",
-            role: "Owner"
-        },
-        {
-            name: "Manager",
-            username: "manager",
-            role: "Manager"
-        },
-        {
-            name: "Alison Burgurs",
-            username: "alison",
-            role: "Staff"
-        },
-        {
-            name: "Staff 2",
-            username: "staff2",
-            role: "Staff"
-        }
-    ],
-
+    staff: STAFF_DEFAULTS,
     shifts: {},
-
     shiftHistory: [],
-
     sales: []
 };
 
-
-/* =========================================================
-   LOAD DATA
-========================================================= */
+// ========================================================
+// LOAD DATA
+// ========================================================
 
 function loadData() {
-
     try {
-
         if (!fs.existsSync(DATA_FILE)) {
-
             fs.writeFileSync(
                 DATA_FILE,
-                JSON.stringify(defaultData, null, 2)
+                JSON.stringify(defaultData, null, 2),
+                "utf8"
             );
 
-            return JSON.parse(
-                JSON.stringify(defaultData)
-            );
+            return JSON.parse(JSON.stringify(defaultData));
         }
 
-        const raw = fs.readFileSync(
-            DATA_FILE,
-            "utf8"
-        );
-
+        const raw = fs.readFileSync(DATA_FILE, "utf8");
         const data = JSON.parse(raw);
 
-        return {
-            staff: Array.isArray(data.staff)
-                ? data.staff
-                : defaultData.staff,
+        const staff = Array.isArray(data.staff)
+            ? data.staff
+            : JSON.parse(JSON.stringify(STAFF_DEFAULTS));
 
-            shifts: data.shifts || {},
+        const owner = staff.find(
+            member => member.username === "mohsin"
+        );
+
+        if (owner) {
+            owner.email = OWNER_EMAIL;
+            owner.role = "Owner";
+        } else {
+            staff.unshift({
+                name: "Mohsin",
+                username: "mohsin",
+                role: "Owner",
+                email: OWNER_EMAIL
+            });
+        }
+
+        return {
+            staff,
+
+            shifts:
+                data.shifts &&
+                typeof data.shifts === "object" &&
+                !Array.isArray(data.shifts)
+                    ? data.shifts
+                    : {},
 
             shiftHistory: Array.isArray(data.shiftHistory)
                 ? data.shiftHistory
@@ -109,79 +175,74 @@ function loadData() {
                 ? data.sales
                 : []
         };
-
     } catch (error) {
-
-        console.log(
-            "DATA LOAD ERROR:",
-            error
-        );
-
-        return JSON.parse(
-            JSON.stringify(defaultData)
-        );
+        console.error("DATA LOAD ERROR:", error.message);
+        throw error;
     }
 }
 
-
-/* =========================================================
-   SAVE DATA
-========================================================= */
-
-function saveData(data) {
-
-    try {
-
-        fs.writeFileSync(
-            DATA_FILE,
-            JSON.stringify(data, null, 2)
-        );
-
-    } catch (error) {
-
-        console.log(
-            "DATA SAVE ERROR:",
-            error
-        );
-    }
-}
-
-
-/* =========================================================
-   DATA
-========================================================= */
+// ========================================================
+// SAVE DATA
+// ========================================================
 
 let database = loadData();
 
+function saveData(data) {
+    const tempFile = DATA_FILE + ".tmp";
 
-/* =========================================================
-   HELPERS
-========================================================= */
+    try {
+        fs.writeFileSync(
+            tempFile,
+            JSON.stringify(data, null, 2),
+            "utf8"
+        );
+
+        fs.renameSync(tempFile, DATA_FILE);
+
+        return true;
+    } catch (error) {
+        console.error("DATA SAVE ERROR:", error.message);
+
+        try {
+            if (fs.existsSync(tempFile)) {
+                fs.unlinkSync(tempFile);
+            }
+        } catch (_) {}
+
+        return false;
+    }
+}
+
+// ========================================================
+// STAFF HELPERS
+// ========================================================
 
 function findStaff(username) {
+    return database.staff.find(
+        user => user.username === String(username || "")
+    );
+}
+
+function findStaffByEmail(email) {
+    if (!email) return null;
+
+    const normalizedEmail = String(email).trim().toLowerCase();
 
     return database.staff.find(
-        user =>
-            user.username === String(username)
+        member =>
+            member.email &&
+            member.email.trim().toLowerCase() === normalizedEmail
     );
 }
 
-
-function managementAccess(username) {
-
-    const user = findStaff(username);
-
-    if (!user) return false;
-
-    return (
-        user.role === "Owner" ||
-        user.role === "Manager"
+function managementAccess(user) {
+    return Boolean(
+        user &&
+        (user.role === "Owner" || user.role === "Manager")
     );
 }
-
 
 function todayStart() {
-
     const now = new Date();
 
     return new Date(
@@ -191,1397 +252,1070 @@ function todayStart() {
     );
 }
 
+// ========================================================
+// FIREBASE AUTHENTICATION
+// ========================================================
+
+async function verifyFirebaseToken(req, res, next) {
+    try {
+        const authHeader = req.headers.authorization;
+
+        if (
+            !authHeader ||
+            !authHeader.startsWith("Bearer ")
+        ) {
+            return res.status(401).json({
+                success: false,
+                message: "Please login first."
+            });
+        }
+
+        const token = authHeader.slice(7).trim();
+
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: "Missing Firebase token."
+            });
+        }
+
+        const decodedToken = await firebaseAuth.verifyIdToken(token);
+
+        if (!decodedToken.email || !decodedToken.email_verified) {
+            return res.status(403).json({
+                success: false,
+                message: "Please verify your email first."
+            });
+        }
+
+        const staff = findStaffByEmail(decodedToken.email);
+
+        if (!staff) {
+            return res.status(403).json({
+                success: false,
+                message: "This email is not approved for Irish Pub staff."
+            });
+        }
+
+        req.firebaseUser = decodedToken;
+        req.staff = staff;
+
+        next();
+    } catch (error) {
+        console.error(
+            "Firebase authentication error:",
+            error.code || "",
+            error.message
+        );
+
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired login. Please login again."
+        });
+    }
+}
+
+function requireManagement(req, res, next) {
+    if (!managementAccess(req.staff)) {
+        return res.status(403).json({
+            success: false,
+            message: "Only Owner or Manager can access this feature."
+        });
+    }
+
+    next();
+}
+
+// ========================================================
+// TEST ROUTES
+// ========================================================
+
+app.get("/test", (req, res) => {
+    res.send("Irish Pub Server Working!");
+});
+
+app.get("/api/test", (req, res) => {
+    res.json({
+        success: true,
+        message: "Irish Pub API is working."
+    });
+});
+
+// ========================================================
+// CHECK APPROVED EMAIL
+// ========================================================
+
+app.post("/api/auth/check-email", (req, res) => {
+    const email = String(req.body.email || "")
+        .trim()
+        .toLowerCase();
+
+    if (!email) {
+        return res.status(400).json({
+            success: false,
+            message: "Email is required."
+        });
+    }
+
+    const approvedStaff = findStaffByEmail(email);
+
+    if (!approvedStaff) {
+        return res.status(403).json({
+            success: false,
+            message: "This email is not approved for Irish Pub staff."
+        });
+    }
+
+    return res.json({
+        success: true,
+        message: "Email approved."
+    });
+});
+
+// ========================================================
+// CURRENT AUTHENTICATED USER
+// ========================================================
+
+app.get("/api/me", verifyFirebaseToken, (req, res) => {
+    res.json({
+        success: true,
+        allowed: true,
+
+        staff: {
+            name: req.staff.name,
+            username: req.staff.username,
+            role: req.staff.role,
+            email: req.staff.email
+        }
+    });
+});
+
+// ========================================================
+// PUBLIC WEBSITE
+// ========================================================
+
+app.use(express.static(__dirname, {
+    index: "index.html"
+}));
+
+// ========================================================
+// STAFF WEBSITE
+// ========================================================
+
+app.use(
+    "/staff",
+    express.static(path.join(__dirname, "staff"))
+);
+
+// ========================================================
+// STAFF API
+// ========================================================
+
+app.get("/api/staff", verifyFirebaseToken, (req, res) => {
+    res.json(
+        database.staff.map(member => ({
+            name: member.name,
+            username: member.username,
+            role: member.role,
+            email: member.email || ""
+        }))
+    );
+});
+
+app.get("/api/staff/:username", verifyFirebaseToken, (req, res) => {
+    const user = findStaff(req.params.username);
+
+    if (!user) {
+        return res.status(404).json({
+            success: false,
+            message: "Staff member not found."
+        });
+    }
+
+    res.json({
+        name: user.name,
+        username: user.username,
+        role: user.role,
+        email: user.email || ""
+    });
+});
+
+// ========================================================
+// SHIFT TIME CALCULATION
+// ========================================================
 
 function calculateDutyTime(username) {
-
     let total = 0;
 
     database.shiftHistory.forEach(shift => {
-
         if (
             shift.username === username &&
             shift.startedAt &&
             shift.endedAt
         ) {
-
-            const start =
-                new Date(shift.startedAt).getTime();
-
-            const end =
-                new Date(shift.endedAt).getTime();
+            const start = new Date(shift.startedAt).getTime();
+            const end = new Date(shift.endedAt).getTime();
 
             if (end > start) {
-                total +=
-                    Math.floor(
-                        (end - start) / 1000
-                    );
+                total += Math.floor((end - start) / 1000);
             }
         }
     });
 
+    const active = database.shifts[username];
 
-    /* Include active shift time */
-
-    const active =
-        database.shifts[username];
-
-    if (
-        active &&
-        active.startedAt
-    ) {
-
-        const start =
-            new Date(active.startedAt).getTime();
-
-        const now =
-            Date.now();
+    if (active && active.startedAt) {
+        const start = new Date(active.startedAt).getTime();
+        const now = Date.now();
 
         if (now > start) {
-
-            total +=
-                Math.floor(
-                    (now - start) / 1000
-                );
+            total += Math.floor((now - start) / 1000);
         }
     }
 
     return total;
 }
 
+// ========================================================
+// CURRENT SHIFT
+// ========================================================
 
-/* =========================================================
-   TEST
-========================================================= */
+app.get("/api/shift/current", verifyFirebaseToken, (req, res) => {
+    const username = String(req.query.username || "");
 
-app.get("/test", function (req, res) {
+    // Staff may only check their own shift.
+    if (username !== req.staff.username) {
+        return res.status(403).json({
+            success: false,
+            message: "You can only check your own shift."
+        });
+    }
 
-    res.send(
-        "Irish Pub Server Working!"
-    );
+    const shift = database.shifts[req.staff.username];
 
+    if (!shift) {
+        return res.json({
+            success: true,
+            active: false,
+            shift: null
+        });
+    }
+
+    res.json({
+        success: true,
+        active: true,
+        shift,
+        currentShift: shift,
+        startedAt: shift.startedAt
+    });
 });
 
+// ========================================================
+// START SHIFT
+// ========================================================
 
-/* =========================================================
-   STAFF API
-========================================================= */
-
-/*
-   GET ALL STAFF
-*/
-
-app.get("/api/staff", function (req, res) {
-
+app.post("/api/shift/start", verifyFirebaseToken, (req, res) => {
     try {
+        const username = req.staff.username;
 
-        res.json(database.staff);
-
-    } catch (error) {
-
-        console.log(
-            "STAFF API ERROR:",
-            error
-        );
-
-        res.status(500).json({
-            message:
-                "Could not load staff."
-        });
-    }
-
-});
-
-
-/* =========================================================
-   CURRENT USER
-========================================================= */
-
-app.get("/api/staff/:username", function (req, res) {
-
-    const user =
-        findStaff(req.params.username);
-
-    if (!user) {
-
-        return res.status(404).json({
-            message:
-                "Staff member not found."
-        });
-    }
-
-    res.json(user);
-
-});
-
-
-/* =========================================================
-   SHIFT CURRENT
-========================================================= */
-
-app.get(
-    "/api/shift/current",
-    function (req, res) {
-
-        const username =
-            String(req.query.username || "");
-
-        const user =
-            findStaff(username);
-
-        if (!user) {
-
-            return res.status(404).json({
-                message:
-                    "Staff member not found."
+        if (database.shifts[username]) {
+            return res.status(400).json({
+                success: false,
+                message: "Your shift is already active."
             });
         }
 
-        const shift =
-            database.shifts[username];
+        const startedAt = new Date().toISOString();
 
-        if (!shift) {
+        const shift = {
+            username,
+            staffName: req.staff.name,
+            startedAt
+        };
 
-            return res.json({
-                active: false
-            });
-        }
+        database.shifts[username] = shift;
 
-        res.json({
-            active: true,
-            startedAt: shift.startedAt
-        });
-
-    }
-);
-
-
-/* =========================================================
-   START SHIFT
-========================================================= */
-
-app.post(
-    "/api/shift/start",
-    function (req, res) {
-
-        try {
-
-            const username =
-                String(req.body.username || "");
-
-            const user =
-                findStaff(username);
-
-            if (!user) {
-
-                return res.status(404).json({
-                    message:
-                        "Staff member not found."
-                });
-            }
-
-
-            if (database.shifts[username]) {
-
-                return res.status(400).json({
-                    message:
-                        "Your shift is already active."
-                });
-            }
-
-
-            const startedAt =
-                new Date().toISOString();
-
-
-            database.shifts[username] = {
-
-                username: username,
-
-                staffName: user.name,
-
-                startedAt: startedAt
-
-            };
-
-
-            saveData(database);
-
-
-            console.log(
-                `${user.name} started shift`
-            );
-
-
-            res.json({
-
-                success: true,
-
-                startedAt: startedAt
-
-            });
-
-        } catch (error) {
-
-            console.log(
-                "START SHIFT ERROR:",
-                error
-            );
-
-            res.status(500).json({
-                message:
-                    "Could not start shift."
-            });
-        }
-
-    }
-);
-
-
-/* =========================================================
-   END SHIFT
-========================================================= */
-
-app.post(
-    "/api/shift/end",
-    function (req, res) {
-
-        try {
-
-            const username =
-                String(req.body.username || "");
-
-            const user =
-                findStaff(username);
-
-            if (!user) {
-
-                return res.status(404).json({
-                    message:
-                        "Staff member not found."
-                });
-            }
-
-
-            const activeShift =
-                database.shifts[username];
-
-
-            if (!activeShift) {
-
-                return res.status(400).json({
-                    message:
-                        "No active shift found."
-                });
-            }
-
-
-            const endedAt =
-                new Date().toISOString();
-
-
-            const start =
-                new Date(
-                    activeShift.startedAt
-                ).getTime();
-
-            const end =
-                new Date(
-                    endedAt
-                ).getTime();
-
-
-            const duration =
-                Math.max(
-                    0,
-                    Math.floor(
-                        (end - start) / 1000
-                    )
-                );
-
-
-            database.shiftHistory.push({
-
-                username: username,
-
-                staffName: user.name,
-
-                startedAt:
-                    activeShift.startedAt,
-
-                endedAt: endedAt,
-
-                duration: duration
-
-            });
-
-
+        if (!saveData(database)) {
             delete database.shifts[username];
 
-
-            saveData(database);
-
-
-            console.log(
-                `${user.name} ended shift`
-            );
-
-
-            res.json({
-
-                success: true,
-
-                endedAt: endedAt,
-
-                duration: duration
-
-            });
-
-        } catch (error) {
-
-            console.log(
-                "END SHIFT ERROR:",
-                error
-            );
-
-            res.status(500).json({
-                message:
-                    "Could not end shift."
+            return res.status(500).json({
+                success: false,
+                message: "Could not save shift."
             });
         }
 
+        console.log(`${req.staff.name} started shift.`);
+
+        res.json({
+            success: true,
+            message: "Shift started successfully.",
+            shift,
+            startedAt
+        });
+    } catch (error) {
+        console.error("START SHIFT ERROR:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Could not start shift."
+        });
     }
+});
+
+// ========================================================
+// END SHIFT
+// ========================================================
+
+app.post("/api/shift/end", verifyFirebaseToken, (req, res) => {
+    try {
+        const username = req.staff.username;
+        const activeShift = database.shifts[username];
+
+        if (!activeShift) {
+            return res.status(400).json({
+                success: false,
+                message: "No active shift found."
+            });
+        }
+
+        const endedAt = new Date().toISOString();
+
+        const start = new Date(activeShift.startedAt).getTime();
+        const end = new Date(endedAt).getTime();
+
+        const duration = Math.max(
+            0,
+            Math.floor((end - start) / 1000)
+        );
+
+        const completedShift = {
+            username,
+            staffName: req.staff.name,
+            startedAt: activeShift.startedAt,
+            endedAt,
+            duration
+        };
+
+        database.shiftHistory.push(completedShift);
+        delete database.shifts[username];
+
+        if (!saveData(database)) {
+            database.shiftHistory.pop();
+            database.shifts[username] = activeShift;
+
+            return res.status(500).json({
+                success: false,
+                message: "Could not save shift."
+            });
+        }
+
+        console.log(`${req.staff.name} ended shift.`);
+
+        res.json({
+            success: true,
+            message: "Shift ended successfully.",
+            shift: completedShift,
+            endedAt,
+            duration
+        });
+    } catch (error) {
+        console.error("END SHIFT ERROR:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Could not end shift."
+        });
+    }
+});
+
+// ========================================================
+// SALES HISTORY — GET
+// IMPORTANT: This route must be outside POST /api/sales.
+// ========================================================
+
+/* ========================================================
+SALES HISTORY — GET
+======================================================== */
+
+app.get("/api/sales", verifyFirebaseToken, (req, res) => {
+try {
+const sales = managementAccess(req.staff)
+? database.sales
+: database.sales.filter(
+sale => sale.username === req.staff.username
 );
 
+    return res.json({
+        success: true,
+        sales
+    });
 
-/* =========================================================
-   SALES
-========================================================= */
+} catch (error) {
+    console.error("LOAD SALES ERROR:", error);
 
-app.post(
-    "/api/sales",
-    async function (req, res) {
+    return res.status(500).json({
+        success: false,
+        message: "Unable to load sales history."
+    });
+}
 
+});
+
+/* ========================================================
+TRUSTED SERVER-SIDE MENU
+======================================================== */
+
+const SALE_MENU = [
+{ id: "smores", name: "S'mores", price: 40 },
+{ id: "skittles", name: "Skittles", price: 45 },
+{ id: "hotdog", name: "Hot Dog", price: 60 },
+{ id: "ham-sandwich", name: "Ham Sandwich", price: 60 },
+{ id: "nachos", name: "Nachos", price: 50 },
+{ id: "toyto-chips", name: "Toyto Chips", price: 20 },
+{ id: "shepherd-pie", name: "Shepherd's Pie", price: 75 },
+{ id: "fish-chips", name: "Fish And Chips", price: 80 },
+{ id: "fries", name: "Fries", price: 80 },
+
+{ id: "irish-coffee", name: "Irish Coffee", price: 50 },
+{ id: "guinness", name: "Guinness", price: 40 },
+{ id: "jameson", name: "Jameson", price: 180 },
+{ id: "whiskey", name: "Whiskey", price: 170 },
+{ id: "rum", name: "Rum", price: 90 },
+{ id: "vodka", name: "Vodka", price: 90 },
+{ id: "tequila", name: "Tequila", price: 80 },
+{ id: "absinthe", name: "Absinthe", price: 140 },
+{ id: "beer", name: "Beer", price: 120 },
+{ id: "cider", name: "Cider", price: 100 },
+{ id: "sweet-tea", name: "Sweet Tea", price: 50 },
+{ id: "green-cow", name: "Green Cow", price: 60 },
+{ id: "water", name: "Water", price: 20 },
+{ id: "delicious-smoothie", name: "Delicious Smoothie", price: 80 },
+{ id: "suspicious-smoothie", name: "Suspicious Smoothie", price: 80 },
+{ id: "sprunk", name: "Sprunk", price: 70 },
+{ id: "coca-cola", name: "Coca Cola", price: 60 }
+
+];
+
+/* ========================================================
+COMPLETE SALE — POST
+======================================================== */
+
+app.post("/api/sales", verifyFirebaseToken, async (req, res) => {
+try {
+const username = req.staff.username;
+const user = req.staff;
+
+    const { items, discount } = req.body;
+
+    // Require an active shift
+    if (!database.shifts[username]) {
+        return res.status(400).json({
+            success: false,
+            message: "Please start your shift before completing a sale."
+        });
+    }
+
+    // Validate cart
+    if (!Array.isArray(items) || items.length === 0) {
+        return res.status(400).json({
+            success: false,
+            message: "No items in the order."
+        });
+    }
+
+    // Validate each item against the server-side menu
+    const cleanItems = [];
+
+    for (const item of items) {
+        const id = String(item.id || "").trim();
+        const quantity = Number(item.quantity);
+
+        const menuItem = SALE_MENU.find(
+            product => product.id === id
+        );
+
+        if (
+            !menuItem ||
+            !Number.isInteger(quantity) ||
+            quantity < 1 ||
+            quantity > 1000
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: `Invalid sale item: ${id || "unknown"}`
+            });
+        }
+
+        cleanItems.push({
+            id: menuItem.id,
+            name: menuItem.name,
+            price: menuItem.price,
+            quantity
+        });
+    }
+
+    // Calculate subtotal
+    const subtotal = cleanItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+    );
+
+    // Validate discount
+    const requestedDiscount =
+        discount === undefined || discount === null || discount === ""
+            ? 0
+            : Number(discount);
+
+    if (
+        !Number.isFinite(requestedDiscount) ||
+        requestedDiscount < 0 ||
+        requestedDiscount > subtotal
+    ) {
+        return res.status(400).json({
+            success: false,
+            message: "Invalid discount amount."
+        });
+    }
+
+    const safeDiscount = Number(requestedDiscount.toFixed(2));
+
+    // Calculate 5% tax
+    const tax = Number(
+        ((subtotal - safeDiscount) * 0.05).toFixed(2)
+    );
+
+    const total = Number(
+        (subtotal - safeDiscount + tax).toFixed(2)
+    );
+
+    // Create sale record
+    const sale = {
+        id: crypto.randomUUID(),
+        username,
+        staffName: user.name || username,
+        items: cleanItems,
+        subtotal: Number(subtotal.toFixed(2)),
+        discount: safeDiscount,
+        tax,
+        total,
+        createdAt: new Date().toISOString()
+    };
+
+    // Save sale to database
+    database.sales.push(sale);
+
+    if (!saveData(database)) {
+        database.sales.pop();
+
+        return res.status(500).json({
+            success: false,
+            message: "Could not save sale."
+        });
+    }
+
+    console.log(
+        "SALE COMPLETED:",
+        sale.staffName,
+        sale.total
+    );
+
+    // Discord notification
+    const webhook =
+        process.env.DISCORD_SALES_WEBHOOK_URL ||
+        process.env.DISCORD_SALES_WEBHOOK;
+
+    if (webhook) {
         try {
+            const itemText = sale.items
+                .map(item =>
+                    `${item.name} x${item.quantity} - $${(
+                        item.price * item.quantity
+                    ).toFixed(2)}`
+                )
+                .join("\n")
+                .slice(0, 1000);
 
-            const {
-                username,
-                staffName,
-                items,
-                subtotal,
-                discount,
-                tax,
-                total
-            } = req.body;
-
-
-            const user =
-                findStaff(username);
-
-
-            if (!user) {
-
-                return res.status(404).json({
-                    message:
-                        "Staff member not found."
-                });
-            }
-
-
-            /*
-               Sale requires active shift
-            */
-
-            if (!database.shifts[username]) {
-
-                return res.status(400).json({
-                    message:
-                        "Please start your shift before completing a sale."
-                });
-            }
-
-
-            if (
-                !Array.isArray(items) ||
-                items.length === 0
-            ) {
-
-                return res.status(400).json({
-                    message:
-                        "No items in the order."
-                });
-            }
-
-
-            const sale = {
-
-                id:
-                    Date.now().toString(),
-
-                username:
-                    username,
-
-                staffName:
-                    staffName ||
-                    user.name,
-
-                items:
-                    items,
-
-                subtotal:
-                    Number(subtotal) || 0,
-
-                discount:
-                    Number(discount) || 0,
-
-                tax:
-                    Number(tax) || 0,
-
-                total:
-                    Number(total) || 0,
-
-                createdAt:
-                    new Date().toISOString()
+            const embed = {
+                title: "💰 IRISH PUB — NEW SALE",
+                color: 12953181,
+                fields: [
+                    {
+                        name: "👤 Staff",
+                        value: String(sale.staffName).slice(0, 1024),
+                        inline: true
+                    },
+                    {
+                        name: "🆔 Username",
+                        value: String(sale.username).slice(0, 1024),
+                        inline: true
+                    },
+                    {
+                        name: "🍽 Items",
+                        value: itemText || "No items",
+                        inline: false
+                    },
+                    {
+                        name: "💵 Subtotal",
+                        value: `$${sale.subtotal.toFixed(2)}`,
+                        inline: true
+                    },
+                    {
+                        name: "🏷 Discount",
+                        value: `$${sale.discount.toFixed(2)}`,
+                        inline: true
+                    },
+                    {
+                        name: "🧾 Tax (5%)",
+                        value: `$${sale.tax.toFixed(2)}`,
+                        inline: true
+                    },
+                    {
+                        name: "💰 Total",
+                        value: `$${sale.total.toFixed(2)}`,
+                        inline: true
+                    }
+                ],
+                footer: {
+                    text: "Irish Pub • Developed By Mohsin"
+                },
+                timestamp: sale.createdAt
             };
 
+            const response = await fetch(webhook, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: "Irish Pub Sales",
+                    embeds: [embed]
+                })
+            });
 
-            database.sales.push(sale);
-
-
-            saveData(database);
-
-
-            console.log(
-                "SALE COMPLETED:",
-                sale.staffName,
-                sale.total
-            );
-
-
-            /* =================================================
-               DISCORD SALES NOTIFICATION
-            ================================================= */
-
-            if (process.env.DISCORD_SALES_WEBHOOK) {
-
-                try {
-
-                    const itemText =
-                        sale.items
-                            .map(item =>
-                                `${item.name} x${item.quantity} - $${(
-                                    Number(item.price) *
-                                    Number(item.quantity)
-                                ).toFixed(2)}`
-                            )
-                            .join("\n");
-
-
-                    const embed = {
-
-                        title:
-                            "💰 IRISH PUB — NEW SALE",
-
-                        color:
-                            12953181,
-
-                        fields: [
-
-                            {
-                                name:
-                                    "👤 Staff",
-
-                                value:
-                                    String(
-                                        sale.staffName
-                                    ),
-
-                                inline: true
-                            },
-
-                            {
-                                name:
-                                    "🆔 Username",
-
-                                value:
-                                    String(
-                                        username
-                                    ),
-
-                                inline: true
-                            },
-
-                            {
-                                name:
-                                    "🍽 Items",
-
-                                value:
-                                    itemText ||
-                                    "No items",
-
-                                inline: false
-                            },
-
-                            {
-                                name:
-                                    "💵 Subtotal",
-
-                                value:
-                                    `$${sale.subtotal.toFixed(2)}`,
-
-                                inline: true
-                            },
-
-                            {
-                                name:
-                                    "🏷 Discount",
-
-                                value:
-                                    `$${sale.discount.toFixed(2)}`,
-
-                                inline: true
-                            },
-
-                            {
-                                name:
-                                    "🧾 Tax",
-
-                                value:
-                                    `$${sale.tax.toFixed(2)}`,
-
-                                inline: true
-                            },
-
-                            {
-                                name:
-                                    "💰 Total",
-
-                                value:
-                                    `$${sale.total.toFixed(2)}`,
-
-                                inline: true
-                            }
-
-                        ],
-
-                        footer: {
-
-                            text:
-                                "Irish Pub • GTA RP • Made By Mohsin"
-
-                        },
-
-                        timestamp:
-                            sale.createdAt
-                    };
-
-
-                    await fetch(
-                        process.env.DISCORD_SALES_WEBHOOK,
-                        {
-
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    username:
-                                        "Irish Pub Sales",
-
-                                    embeds:
-                                        [embed]
-
-                                })
-
-                        }
-                    );
-
-                } catch (discordError) {
-
-                    console.log(
-                        "SALES DISCORD ERROR:",
-                        discordError
-                    );
-
-                }
-
+            if (!response.ok) {
+                console.error(
+                    "SALES DISCORD ERROR:",
+                    response.status,
+                    await response.text()
+                );
             }
-
-
-            res.json({
-
-                success: true,
-
-                message:
-                    "Sale completed successfully.",
-
-                sale: sale
-
-            });
-
-        } catch (error) {
-
-            console.log(
-                "SALE ERROR:",
-                error
+        } catch (discordError) {
+            // Sale is already saved; notification failure won't undo it
+            console.error(
+                "SALES DISCORD ERROR:",
+                discordError.message
             );
-
-            res.status(500).json({
-                message:
-                    "Could not complete sale."
-            });
         }
-
     }
-);
+
+    // Respond to frontend
+    return res.status(201).json({
+        success: true,
+        message: "Sale completed successfully.",
+        sale
+    });
+
+} catch (error) {
+    console.error("SALE ERROR:", error);
+
+    return res.status(500).json({
+        success: false,
+        message: "Could not complete sale."
+    });
+}
+
+});
 
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
+// ========================================================
+// DASHBOARD
+// ========================================================
 
 app.get(
     "/api/dashboard",
-    function (req, res) {
-
+    verifyFirebaseToken,
+    requireManagement,
+    (req, res) => {
         try {
-
-            const username =
-                String(
-                    req.query.username || ""
-                );
-
-
-            const user =
-                findStaff(username);
-
-
-            if (!user) {
-
-                return res.status(404).json({
-                    message:
-                        "Staff member not found."
-                });
-            }
-
-
-            /*
-               ONLY OWNER / MANAGER
-            */
-
-            if (
-                user.role !== "Owner" &&
-                user.role !== "Manager"
-            ) {
-
-                return res.status(403).json({
-                    message:
-                        "Only Owner or Manager can access the dashboard."
-                });
-            }
-
-
             let totalSales = 0;
-
             let totalOrders = 0;
-
             let totalDutyTime = 0;
-
             let todaySales = 0;
 
+            const startToday = todayStart();
 
-            const startToday =
-                todayStart();
+            database.sales.forEach(sale => {
+                totalSales += Number(sale.total) || 0;
+                totalOrders++;
 
+                const saleDate = new Date(sale.createdAt);
 
-            database.sales.forEach(
-                sale => {
-
-                    totalSales +=
-                        Number(sale.total) || 0;
-
-                    totalOrders += 1;
-
-
-                    const saleDate =
-                        new Date(
-                            sale.createdAt
-                        );
-
-
-                    if (
-                        saleDate >=
-                        startToday
-                    ) {
-
-                        todaySales +=
-                            Number(
-                                sale.total
-                            ) || 0;
-
-                    }
-
+                if (
+                    !Number.isNaN(saleDate.getTime()) &&
+                    saleDate >= startToday
+                ) {
+                    todaySales += Number(sale.total) || 0;
                 }
-            );
+            });
 
+            database.staff.forEach(person => {
+                totalDutyTime += calculateDutyTime(person.username);
+            });
 
-            database.staff.forEach(
-                person => {
-
-                    totalDutyTime +=
-                        calculateDutyTime(
-                            person.username
-                        );
-
-                }
-            );
-
-
-            /*
-               STAFF PERFORMANCE
-            */
-
-            const staffPerformance =
-                database.staff.map(
-                    person => {
-
-                        const personSales =
-                            database.sales.filter(
-                                sale =>
-                                    sale.username ===
-                                    person.username
-                            );
-
-
-                        const sales =
-                            personSales.reduce(
-                                (
-                                    sum,
-                                    sale
-                                ) =>
-                                    sum +
-                                    (
-                                        Number(
-                                            sale.total
-                                        ) || 0
-                                    ),
-                                0
-                            );
-
-
-                        return {
-
-                            name:
-                                person.name,
-
-                            username:
-                                person.username,
-
-                            role:
-                                person.role,
-
-                            orders:
-                                personSales.length,
-
-                            sales:
-                                sales,
-
-                            dutyTime:
-                                calculateDutyTime(
-                                    person.username
-                                )
-
-                        };
-
-                    }
+            const staffPerformance = database.staff.map(person => {
+                const personSales = database.sales.filter(
+                    sale => sale.username === person.username
                 );
 
+                const sales = personSales.reduce(
+                    (sum, sale) => sum + (Number(sale.total) || 0),
+                    0
+                );
 
-            /*
-               RECENT SALES
-            */
-
-            const recentSales =
-                database.sales
-                    .slice(-20)
-                    .reverse();
-
+                return {
+                    name: person.name,
+                    username: person.username,
+                    role: person.role,
+                    orders: personSales.length,
+                    sales,
+                    dutyTime: calculateDutyTime(person.username)
+                };
+            });
 
             res.json({
-
-                totalSales:
-                    totalSales,
-
-                totalOrders:
-                    totalOrders,
-
-                totalDutyTime:
-                    totalDutyTime,
-
-                todaySales:
-                    todaySales,
-
-                staffPerformance:
-                    staffPerformance,
-
-                recentSales:
-                    recentSales
-
+                success: true,
+                totalSales,
+                totalOrders,
+                totalDutyTime,
+                todaySales,
+                staffPerformance,
+                recentSales: database.sales.slice(-20).reverse()
             });
-
         } catch (error) {
-
-            console.log(
-                "DASHBOARD ERROR:",
-                error
-            );
+            console.error("DASHBOARD ERROR:", error);
 
             res.status(500).json({
-                message:
-                    "Could not load dashboard."
+                success: false,
+                message: "Could not load dashboard."
             });
         }
-
     }
 );
 
-
-/* =========================================================
-   RESET DASHBOARD
-========================================================= */
+// ========================================================
+// RESET DASHBOARD
+// ========================================================
 
 app.post(
     "/api/dashboard/reset",
-    function (req, res) {
-
+    verifyFirebaseToken,
+    requireManagement,
+    (req, res) => {
         try {
-
-            const username =
-                String(
-                    req.body.username || ""
-                );
-
-
-            const user =
-                findStaff(username);
-
-
-            if (!user) {
-
-                return res.status(404).json({
-                    message:
-                        "Staff member not found."
-                });
-            }
-
-
-            if (
-                user.role !== "Owner" &&
-                user.role !== "Manager"
-            ) {
-
-                return res.status(403).json({
-                    message:
-                        "Only Owner or Manager can reset dashboard."
-                });
-            }
-
-
-            /*
-               Clear sales + completed shifts
-            */
+            const oldSales = database.sales;
+            const oldHistory = database.shiftHistory;
 
             database.sales = [];
-
             database.shiftHistory = [];
 
+            if (!saveData(database)) {
+                database.sales = oldSales;
+                database.shiftHistory = oldHistory;
 
-            /*
-               Keep active shifts
-            */
+                return res.status(500).json({
+                    success: false,
+                    message: "Could not save dashboard reset."
+                });
+            }
 
-            saveData(database);
-
-
-            console.log(
-                `Dashboard reset by ${user.name}`
-            );
-
+            console.log(`Dashboard reset by ${req.staff.name}`);
 
             res.json({
-
                 success: true,
-
-                message:
-                    "Dashboard data has been reset."
-
+                message: "Dashboard data has been reset."
             });
-
         } catch (error) {
-
-            console.log(
-                "RESET ERROR:",
-                error
-            );
+            console.error("RESET ERROR:", error);
 
             res.status(500).json({
-                message:
-                    "Dashboard reset failed."
+                success: false,
+                message: "Dashboard reset failed."
             });
         }
-
     }
 );
 
-
-/* =========================================================
-   STAFF ROLE UPDATE
-========================================================= */
+// ========================================================
+// STAFF ROLE UPDATE
+// ========================================================
 
 app.post(
     "/api/staff/roles",
-    function (req, res) {
-
+    verifyFirebaseToken,
+    requireManagement,
+    (req, res) => {
         try {
-
-            const {
-                username,
-                changes
-            } = req.body;
-
-
-            const currentUser =
-                findStaff(username);
-
-
-            if (!currentUser) {
-
-                return res.status(404).json({
-                    message:
-                        "Current staff member not found."
-                });
-            }
-
-
-            /*
-               ONLY OWNER / MANAGER
-            */
-
-            if (
-                currentUser.role !== "Owner" &&
-                currentUser.role !== "Manager"
-            ) {
-
-                return res.status(403).json({
-                    message:
-                        "Only Owner or Manager can change positions."
-                });
-            }
-
+            const currentUser = req.staff;
+            const changes = req.body.changes;
 
             if (!Array.isArray(changes)) {
-
                 return res.status(400).json({
-                    message:
-                        "Invalid staff changes."
+                    success: false,
+                    message: "Invalid staff changes."
                 });
             }
 
+            const oldRoles = database.staff.map(member => ({
+                username: member.username,
+                role: member.role
+            }));
 
-            /*
-               Validate roles
-            */
-
-            const allowedRoles = [
-                "Owner",
-                "Manager",
-                "Staff"
-            ];
-
-
-            changes.forEach(change => {
-
+            for (const change of changes) {
                 if (
-                    !allowedRoles.includes(
-                        change.role
-                    )
+                    !change ||
+                    typeof change.username !== "string"
                 ) {
-                    return;
+                    continue;
                 }
 
+                if (!ALLOWED_ROLES.includes(change.role)) {
+                    for (const old of oldRoles) {
+                        const member = findStaff(old.username);
+                        if (member) member.role = old.role;
+                    }
 
-                const target =
-                    findStaff(
-                        change.username
-                    );
+                    return res.status(400).json({
+                        success: false,
+                        message: "Invalid role."
+                    });
+                }
 
+                const target = findStaff(change.username);
 
                 if (!target) {
-                    return;
+                    for (const old of oldRoles) {
+                        const member = findStaff(old.username);
+                        if (member) member.role = old.role;
+                    }
+
+                    return res.status(404).json({
+                        success: false,
+                        message: `Staff member not found: ${change.username}`
+                    });
                 }
 
+                // The primary Owner cannot be demoted.
+                if (
+                    target.username === "mohsin" &&
+                    change.role !== "Owner"
+                ) {
+                    for (const old of oldRoles) {
+                        const member = findStaff(old.username);
+                        if (member) member.role = old.role;
+                    }
 
-                /*
-                   Manager cannot change Owner
-                */
+                    return res.status(403).json({
+                        success: false,
+                        message: "The primary Owner cannot be demoted."
+                    });
+                }
 
+                // Managers cannot assign or change Owner roles.
                 if (
                     currentUser.role === "Manager" &&
-                    target.role === "Owner"
+                    (
+                        target.role === "Owner" ||
+                        change.role === "Owner"
+                    )
                 ) {
+                    for (const old of oldRoles) {
+                        const member = findStaff(old.username);
+                        if (member) member.role = old.role;
+                    }
 
-                    return;
+                    return res.status(403).json({
+                        success: false,
+                        message: "Managers cannot change Owner positions."
+                    });
                 }
 
+                target.role = change.role;
+            }
 
-                /*
-                   Manager cannot promote someone to Owner
-                */
+            const ownerCount = database.staff.filter(
+                member => member.role === "Owner"
+            ).length;
 
-                if (
-                    currentUser.role === "Manager" &&
-                    change.role === "Owner"
-                ) {
-
-                    return;
+            if (ownerCount < 1) {
+                for (const old of oldRoles) {
+                    const member = findStaff(old.username);
+                    if (member) member.role = old.role;
                 }
 
+                return res.status(400).json({
+                    success: false,
+                    message: "At least one Owner is required."
+                });
+            }
 
-                /*
-                   Owner can change all roles
-                */
+            if (!saveData(database)) {
+                for (const old of oldRoles) {
+                    const member = findStaff(old.username);
+                    if (member) member.role = old.role;
+                }
 
-                target.role =
-                    change.role;
-
-            });
-
-
-            saveData(database);
-
+                return res.status(500).json({
+                    success: false,
+                    message: "Could not save staff positions."
+                });
+            }
 
             console.log(
                 `Staff positions updated by ${currentUser.name}`
             );
 
-
             res.json({
-
                 success: true,
+                message: "Staff positions saved successfully!",
 
-                message:
-                    "Staff positions saved successfully!",
-
-                staff:
-                    database.staff
-
+                staff: database.staff.map(member => ({
+                    name: member.name,
+                    username: member.username,
+                    role: member.role,
+                    email: member.email || ""
+                }))
             });
-
         } catch (error) {
-
-            console.log(
-                "ROLE UPDATE ERROR:",
-                error
-            );
+            console.error("ROLE UPDATE ERROR:", error);
 
             res.status(500).json({
-                message:
-                    "Could not update staff positions."
+                success: false,
+                message: "Could not update staff positions."
             });
         }
-
     }
 );
 
-
-/* =========================================================
-   APPLICATION / CAREERS
-========================================================= */
-
-app.post(
-    "/api/apply",
-    async function (req, res) {
-
-        try {
-
-            const data = req.body;
-
-            console.log(
-                "Application received:",
-                data.rpName
-            );
-
-
-            if (!process.env.DISCORD_WEBHOOK) {
-
-                console.log(
-                    "ERROR: DISCORD_WEBHOOK is missing"
-                );
-
-                return res.status(500).json({
-
-                    success: false,
-
-                    message:
-                        "Discord webhook is not configured on the server."
-
-                });
-            }
-
-
-            const embed = {
-
-                title:
-                    "🟢 NEW IRISH PUB APPLICATION",
-
-                color:
-                    12953181,
-
-
-                fields: [
-
-                    {
-                        name:
-                            "👤 Full Name",
-
-                        value:
-                            String(
-                                data.fullName ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "🎭 RP Name",
-
-                        value:
-                            String(
-                                data.rpName ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "🆔 CID",
-
-                        value:
-                            String(
-                                data.cid ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "📱 Phone Number",
-
-                        value:
-                            String(
-                                data.phone ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "🎂 Age",
-
-                        value:
-                            String(
-                                data.age ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "💬 Discord ID",
-
-                        value:
-                            String(
-                                data.discord ||
-                                "Not provided"
-                            ),
-
-                        inline: true
-                    },
-
-                    {
-                        name:
-                            "📋 Previous Experience",
-
-                        value:
-                            String(
-                                data.experience ||
-                                "No previous experience"
-                            ),
-
-                        inline: false
-                    },
-
-                    {
-                        name:
-                            "❓ Why do you want to join?",
-
-                        value:
-                            String(
-                                data.reason ||
-                                "Not provided"
-                            ),
-
-                        inline: false
-                    }
-
-                ],
-
-
-                footer: {
-
-                    text:
-                        "Irish Pub • GTA RP Recruitment • Made By Mohsin"
-
-                },
-
-
-                timestamp:
-                    new Date().toISOString()
-
-            };
-
-
-            const discordResponse =
-                await fetch(
-                    process.env.DISCORD_WEBHOOK,
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type":
-                                "application/json"
-
-                        },
-
-                        body:
-                            JSON.stringify({
-
-                                username:
-                                    "Irish Pub Recruitment",
-
-                                embeds:
-                                    [embed]
-
-                            })
-
-                    }
-                );
-
-
-            if (!discordResponse.ok) {
-
-                const errorText =
-                    await discordResponse.text();
-
-
-                console.log(
-                    "DISCORD ERROR:",
-                    errorText
-                );
-
-
-                return res.status(500).json({
-
-                    success: false,
-
-                    message:
-                        "Discord rejected the application."
-
-                });
-
-            }
-
-
-            console.log(
-                "DISCORD NOTIFICATION SENT!"
-            );
-
-
-            return res.json({
-
-                success: true,
-
-                message:
-                    "Application submitted successfully!"
-
+// ========================================================
+// CAREERS APPLICATION
+// ========================================================
+
+app.post("/api/apply", async (req, res) => {
+    try {
+        const data = req.body;
+
+        if (!process.env.DISCORD_WEBHOOK) {
+            return res.status(500).json({
+                success: false,
+                message: "Discord webhook is not configured on the server."
             });
+        }
 
-        } catch (error) {
+        const fields = [
+            ["👤 Full Name", data.fullName],
+            ["🎭 RP Name", data.rpName],
+            ["🆔 CID", data.cid],
+            ["📱 Phone Number", data.phone],
+            ["🎂 Age", data.age],
+            ["💬 Discord ID", data.discord],
+            ["📋 Previous Experience", data.experience],
+            ["❓ Why do you want to join?", data.reason]
+        ];
 
-            console.log(
-                "SERVER ERROR:",
-                error
+        const embed = {
+            title: "🟢 NEW IRISH PUB APPLICATION",
+            color: 12953181,
+
+            fields: fields.map(([name, value]) => ({
+                name,
+                value: String(value || "Not provided").slice(0, 1000),
+                inline: false
+            })),
+
+            footer: {
+                text: "Irish Pub • GTA RP Recruitment • Made By Mohsin"
+            },
+
+            timestamp: new Date().toISOString()
+        };
+
+        const discordResponse = await fetch(
+            process.env.DISCORD_WEBHOOK,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: "Irish Pub Recruitment",
+                    embeds: [embed]
+                })
+            }
+        );
+
+        if (!discordResponse.ok) {
+            console.error(
+                "DISCORD ERROR:",
+                discordResponse.status,
+                await discordResponse.text()
             );
-
 
             return res.status(500).json({
-
                 success: false,
-
-                message:
-                    "Server error while sending application."
-
+                message: "Discord rejected the application."
             });
-
         }
 
+        res.json({
+            success: true,
+            message: "Application submitted successfully!"
+        });
+    } catch (error) {
+        console.error("APPLICATION ERROR:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error while sending application."
+        });
     }
-);
+});
 
+// ========================================================
+// API 404 HANDLER
+// ========================================================
 
-/* =========================================================
-   START SERVER
-========================================================= */
+app.use("/api", (req, res) => {
+    res.status(404).json({
+        success: false,
+        message: "API route not found."
+    });
+});
 
-app.listen(
-    PORT,
-    function () {
+// ========================================================
+// ERROR HANDLER
+// ========================================================
 
-        console.log(
-            "========================================"
-        );
+app.use((error, req, res, next) => {
+    console.error("SERVER ERROR:", error);
 
-        console.log(
-            " Irish Pub Server Running"
-        );
-
-        console.log(
-            ` http://localhost:${PORT}`
-        );
-
-        console.log(
-            ` Staff: http://localhost:${PORT}/staff/`
-        );
-
-        console.log(
-            "========================================"
-        );
-
+    if (res.headersSent) {
+        return next(error);
     }
-);
+
+    res.status(500).json({
+        success: false,
+        message: "Internal server error."
+    });
+});
+
+// ========================================================
+// START SERVER
+// ========================================================
+
+app.listen(PORT, () => {
+    console.log("========================================");
+    console.log(" Irish Pub Server Running");
+    console.log(` http://localhost:${PORT}`);
+    console.log(` Staff: http://localhost:${PORT}/staff/`);
+    console.log("========================================");
+});

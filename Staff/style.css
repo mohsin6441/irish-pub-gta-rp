@@ -1,0 +1,1456 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --bg: #08110d;
+    --panel: #101c16;
+    --panel2: #14231a;
+    --green: #1b5a39;
+    --green-light: #2e8657;
+    --gold: #d8b76a;
+    --text: #f3f2e9;
+    --muted: #91a096;
+    --border: rgba(216, 183, 106, 0.16);
+    --danger: #c95757;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.background-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 15% 0%, rgba(30, 91, 57, .19), transparent 40%),
+        radial-gradient(ellipse at 100% 100%, rgba(147, 112, 42, .07), transparent 40%);
+    z-index: -1;
+}
+
+.eyebrow {
+    color: var(--gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    margin-bottom: 10px;
+}
+
+.muted,
+.small-note {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.brand-icon {
+    display: grid;
+    place-items: center;
+    width: 65px;
+    height: 65px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 35px;
+    margin: 0 auto 20px;
+    background: rgba(216, 183, 106, .05);
+}
+
+.brand-icon.small {
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+/* AUTH */
+
+.auth-screen {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.auth-card {
+    width: min(100%, 430px);
+    background: rgba(16, 28, 22, .96);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 42px;
+    text-align: center;
+    box-shadow: 0 25px 90px rgba(0, 0, 0, .3);
+}
+
+.auth-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+.auth-card h1 span {
+    color: var(--gold);
+}
+
+.auth-card form {
+    text-align: left;
+    margin-top: 30px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    color: #c3cec6;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    min-height: 47px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 12px 14px;
+    color: white;
+    background: #09120d;
+    outline: none;
+    margin-bottom: 18px;
+}
+
+input:focus {
+    border-color: var(--gold);
+}
+
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.clear-btn {
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 18px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .5px;
+    transition: .2s;
+}
+
+.primary-btn {
+    background: var(--gold);
+    color: #17170f;
+}
+
+.primary-btn:hover {
+    background: #efd28a;
+    transform: translateY(-1px);
+}
+
+.auth-card .primary-btn {
+    width: 100%;
+    min-height: 48px;
+}
+
+.secondary-btn {
+    background: #1b3024;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.danger-btn {
+    color: white;
+    background: #8c3434;
+}
+
+.clear-btn {
+    color: var(--muted);
+    background: transparent;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.text-btn {
+    color: var(--gold);
+    border: 0;
+    background: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.auth-switch {
+    color: var(--muted);
+    font-size: 12px;
+    margin: 22px 0;
+}
+
+.small-note {
+    font-size: 10px;
+}
+
+.message {
+    color: var(--gold);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+}
+
+/* APP LAYOUT */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 255px;
+    background: rgba(11, 22, 15, .97);
+    border-right: 1px solid var(--border);
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-brand h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+.sidebar-brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.staff-profile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 23px 7px;
+    overflow: hidden;
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 39px;
+    height: 39px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #234c34;
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.staff-profile strong {
+    display: block;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.staff-profile small {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.navigation {
+    display: grid;
+    gap: 7px;
+}
+
+.nav-btn {
+    text-align: left;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    padding: 14px;
+    background: transparent;
+    color: #aab7ae;
+    font-size: 13px;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    color: var(--gold);
+    background: #172a1e;
+    border-color: var(--border);
+}
+
+.logout-btn {
+    margin-top: auto;
+    padding: 13px;
+    border: 1px solid rgba(201, 87, 87, .25);
+    border-radius: 9px;
+    color: #e48b8b;
+    background: rgba(201, 87, 87, .06);
+}
+
+.main-content {
+    width: calc(100% - 255px);
+    max-width: 1700px;
+    padding: 32px;
+    margin: 0 auto;
+    min-width: 0;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+}
+
+.status-pill {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #c2d2c7;
+    font-size: 11px;
+    background: #14271b;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 30px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    background: #69cf89;
+    border-radius: 50%;
+}
+
+/* CARDS */
+
+.welcome-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 190px;
+    padding: 35px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background:
+        linear-gradient(110deg, rgba(21, 67, 41, .95), rgba(15, 31, 21, .96));
+    margin-bottom: 24px;
+}
+
+.welcome-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    margin-bottom: 10px;
+}
+
+.welcome-card p:last-child {
+    color: #b3c3b7;
+    font-size: 13px;
+}
+
+.welcome-symbol {
+    font-size: 90px;
+    color: rgba(216, 183, 106, .75);
+    line-height: 1;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 23px;
+    min-width: 0;
+}
+
+.stat-card > span {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    font-weight: 700;
+}
+
+.stat-card h2 {
+    font-size: clamp(19px, 2vw, 26px);
+    margin: 15px 0 9px;
+    overflow-wrap: anywhere;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 28px 0 17px;
+}
+
+.section-heading h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 7px;
+}
+
+.shift-card,
+.notice-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+.shift-card h3,
+.notice-card h3 {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.shift-card p,
+.notice-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.shift-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* MENU */
+
+.shop-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+    gap: 22px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.filter-btn {
+    padding: 10px 15px;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: #c3cec6;
+    font-size: 11px;
+}
+
+.filter-btn.active {
+    background: var(--gold);
+    color: #17170f;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.menu-item {
+    min-width: 0;
+    padding: 17px;
+    border-radius: 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-emoji {
+    font-size: 28px;
+}
+
+.menu-item h3 {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.menu-item p {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.menu-item button {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: #1c3a27;
+    color: #e6d29a;
+    border-radius: 7px;
+    padding: 10px 5px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.menu-item button:hover {
+    background: #285337;
+}
+
+.cart-panel {
+    position: sticky;
+    top: 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.cart-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.cart-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+}
+
+.cart-count {
+    background: #244a31;
+    color: var(--gold);
+    border-radius: 30px;
+    min-width: 28px;
+    padding: 6px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+}
+
+.cart-row h4 {
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.cart-row small {
+    color: var(--gold);
+    font-size: 11px;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 8px;
+}
+
+.quantity-control button {
+    width: 26px;
+    height: 26px;
+    border: 1px solid var(--border);
+    background: #1c3023;
+    color: white;
+    border-radius: 6px;
+}
+
+.cart-summary {
+    display: grid;
+    gap: 13px;
+    padding: 18px 0;
+}
+
+.cart-summary div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.cart-summary span {
+    color: var(--muted);
+}
+
+.cart-summary strong {
+    font-size: 12px;
+}
+
+.cart-summary .grand-total {
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+    font-size: 14px;
+}
+
+.grand-total strong {
+    color: var(--gold);
+    font-size: 18px;
+}
+
+.full-btn {
+    width: 100%;
+    min-height: 45px;
+}
+
+/* TABLES */
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    font-size: 11px;
+}
+
+th {
+    color: var(--gold);
+    background: #14251a;
+    letter-spacing: .7px;
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+td {
+    color: #d4ddd6;
+}
+
+.empty-state {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.summary-strip {
+    display: flex;
+    gap: 35px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+    margin-bottom: 18px;
+}
+
+.summary-strip span,
+.summary-strip strong {
+    display: block;
+}
+
+.summary-strip span {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.summary-strip strong {
+    color: var(--gold);
+    font-size: 22px;
+}
+
+.notice-card {
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.notice-card > span {
+    font-size: 30px;
+    color: var(--gold);
+}
+
+.footer {
+    padding-top: 35px;
+    margin-top: 45px;
+    border-top: 1px solid var(--border);
+    color: #718077;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .shop-layout {
+        grid-template-columns: minmax(0, 1fr) 290px;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 850px) {
+    .app {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .sidebar-brand {
+        padding-bottom: 15px;
+    }
+
+    .staff-profile {
+        padding: 12px 5px;
+    }
+
+    .navigation {
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+        padding-bottom: 5px;
+    }
+
+    .nav-btn {
+        white-space: nowrap;
+        padding: 12px;
+    }
+
+    .logout-btn {
+        margin-top: 10px;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .shop-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 520px) {
+    .auth-card {
+        padding: 28px 20px;
+    }
+
+    .topbar h1 {
+        font-size: 23px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .status-pill {
+        display: none;
+    }
+
+    .welcome-card {
+        padding: 24px;
+    }
+
+    .welcome-symbol {
+        font-size: 55px;
+    }
+
+    .stats-grid {
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .shift-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .shift-actions {
+        width: 100%;
+    }
+
+    .shift-actions button {
+        flex: 1;
+    }
+
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .section-heading h2 {
+        font-size: 21px;
+    }
+
+    .summary-strip {
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+}
+/* =====================================
+   IRISH PUB - COMPACT SALES MENU
+===================================== */
+
+/* Item grid: more items in one row */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    align-items: stretch;
+}
+
+/* Small food and drink boxes */
+.menu-item {
+    min-width: 0;
+    padding: 10px;
+    gap: 6px;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #122219, #0c1710);
+    border: 1px solid rgba(216, 183, 106, 0.18);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.menu-item:hover {
+    border-color: #d8b76a;
+    transform: translateY(-2px);
+}
+
+/* Smaller emoji */
+.menu-emoji {
+    font-size: 21px;
+    line-height: 1.2;
+}
+
+/* Item name */
+.menu-item h3 {
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    min-height: 30px;
+}
+
+/* Price */
+.menu-item p {
+    color: #d8b76a;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Compact ADD button */
+.menu-item button {
+    width: 100%;
+    padding: 7px 3px;
+    border: 1px solid rgba(216, 183, 106, 0.2);
+    border-radius: 6px;
+    background: #1b3926;
+    color: #e6d29a;
+    font-size: 9px;
+    font-weight: 700;
+    transition: background 0.2s ease;
+}
+
+.menu-item button:hover {
+    background: #2e6040;
+}
+
+/* Food menu area spacing */
+.filter-row {
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.filter-btn {
+    padding: 8px 12px;
+    font-size: 10px;
+}
+
+/* Medium screens */
+@media (max-width: 1200px) {
+    .menu-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+}
+
+/* Small screens */
+@media (max-width: 520px) {
+    .menu-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .menu-item {
+        padding: 8px 6px;
+    }
+
+    .menu-item h3 {
+        font-size: 10px;
+        min-height: 28px;
+    }
+
+    .menu-item button {
+        font-size: 8px;
+        padding: 7px 2px;
+    }
+}
+/* ==================================
+   IRISH PUB - LUXURY WHISKEY BACKGROUND
+================================== */
+
+body {
+    background-color: #080a08;
+    background-image:
+        linear-gradient(
+            rgba(5, 8, 6, 0.78),
+            rgba(5, 8, 6, 0.88)
+        ),
+        url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=85");
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Keep sales content readable */
+.main-content {
+    background: transparent;
+}
+
+/* Dark luxury sidebar */
+.sidebar {
+    background: rgba(7, 14, 9, 0.94);
+    backdrop-filter: blur(10px);
+}
+
+/* Premium item boxes */
+.menu-item {
+    background: rgba(13, 24, 17, 0.91);
+    border: 1px solid rgba(216, 183, 106, 0.3);
+    backdrop-filter: blur(6px);
+}
+
+/* Cart panel */
+.cart-panel {
+    background: rgba(12, 22, 15, 0.95);
+    backdrop-filter: blur(8px);
+}
+
+/* Golden hover effect */
+.menu-item:hover {
+    border-color: #d8b76a;
+    box-shadow: 0 5px 20px rgba(216, 183, 106, 0.12);
+}
+/* =====================================
+   BLACK GLASS + BLUR FOOD BOXES
+===================================== */
+
+/* Food and Drink Boxes */
+.menu-item {
+    background: rgba(0, 0, 0, 0.68) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+
+    transition: all 0.25s ease;
+}
+
+/* Hover Effect */
+.menu-item:hover {
+    background: rgba(0, 0, 0, 0.82) !important;
+    border-color: rgba(216, 183, 106, 0.65);
+
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+
+    transform: translateY(-2px);
+}
+
+/* Item Name */
+.menu-item h3 {
+    color: #ffffff;
+}
+
+/* Item Price */
+.menu-item p {
+    color: #e4c477;
+}
+
+/* ADD Button */
+.menu-item button {
+    background: rgba(20, 45, 29, 0.88);
+    border: 1px solid rgba(216, 183, 106, 0.25);
+    color: #f0d995;
+}
+
+.menu-item button:hover {
+    background: rgba(42, 82, 52, 0.95);
+}
+
+/* Filter Buttons */
+.filter-btn {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Cart Glass Effect */
+.cart-panel {
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(216, 183, 106, 0.2);
+}
+/* ==========================================
+   IRISH PUB - BLACK 3D GOLD GLASS DESIGN
+========================================== */
+
+/* BACKGROUND IMAGE */
+body {
+    background-color: #050705 !important;
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.40)
+        ),
+        url("https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=85") !important;
+
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
+/* ALL MAIN BOXES - BLACK GLASS */
+.welcome-card,
+.stat-card,
+.shift-card,
+.notice-card,
+.menu-item,
+.cart-panel,
+.summary-strip,
+.table-wrap {
+    background: rgba(0, 0, 0, 0.48) !important;
+
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+
+    border: 1px solid rgba(218, 180, 87, 0.70) !important;
+    border-radius: 12px !important;
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.50),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 0 12px rgba(218, 180, 87, 0.035) !important;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease !important;
+}
+
+/* 3D HOVER EFFECT */
+.menu-item:hover,
+.stat-card:hover,
+.welcome-card:hover,
+.shift-card:hover,
+.notice-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #ffda78 !important;
+
+    box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.60),
+        0 0 12px rgba(218, 180, 87, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* FOOD AND DRINK BOXES */
+.menu-item {
+    padding: 10px !important;
+    gap: 7px !important;
+}
+
+.menu-item h3 {
+    color: #ffffff !important;
+    text-shadow: 0 2px 5px #000000;
+}
+
+.menu-item p {
+    color: #f2ce75 !important;
+    font-weight: 700 !important;
+}
+
+/* GOLDEN ADD BUTTON */
+.menu-item button {
+    background: rgba(18, 35, 23, 0.85) !important;
+    color: #ffdf91 !important;
+    border: 1px solid rgba(218, 180, 87, 0.55) !important;
+}
+
+.menu-item button:hover {
+    background: rgba(70, 53, 19, 0.90) !important;
+    border-color: #ffda78 !important;
+}
+
+/* FILTER BUTTONS */
+.filter-btn {
+    background: rgba(0, 0, 0, 0.55) !important;
+    color: #eeeeee !important;
+    border: 1px solid rgba(218, 180, 87, 0.50) !important;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.filter-btn.active {
+    background: #d8b76a !important;
+    color: #111111 !important;
+}
+
+/* CART GLASS */
+.cart-panel {
+    background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* KEEP TEXT CLEAR */
+.section-heading h2,
+.topbar h1,
+.stat-card h2,
+.welcome-card h2 {
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* SIDEBAR BLACK GLASS */
+.sidebar {
+    background: rgba(0, 0, 0, 0.82) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-right: 1px solid rgba(218, 180, 87, 0.50) !important;
+}
+
+/* TABLE BACKGROUND */
+table {
+    background: transparent !important;
+}
+
+th {
+    background: rgba(0, 0, 0, 0.65) !important;
+}
+
+td {
+    background: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* SMALL SCREEN */
+@media (max-width: 520px) {
+    .menu-item {
+        padding: 8px 6px !important;
+    }
+}
+/* =========================================
+   IRISH PUB REGISTRATION DESIGN
+========================================= */
+
+#signupForm {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+#signupForm label {
+    display: block;
+    margin-bottom: 7px;
+    color: #d8b76a;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#signupForm input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid rgba(216, 183, 106, 0.3);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(8, 20, 14, 0.9);
+    color: #ffffff;
+    font-size: 14px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+#signupForm input:focus {
+    border-color: #d8b76a;
+    box-shadow: 0 0 12px rgba(216, 183, 106, 0.15);
+}
+
+#signupForm input::placeholder {
+    color: #8d968e;
+}
+
+#signupForm button[type="submit"] {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 15px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #b9954b, #e4ca82);
+    color: #142019;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+#signupForm button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 22px rgba(216, 183, 106, 0.25);
+}
+
+#signupForm button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#signupForm input:focus-visible {
+    outline: 2px solid rgba(216, 183, 106, 0.5);
+    outline-offset: 2px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    #signupForm {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    #signupForm button[type="submit"] {
+        grid-column: 1;
+    }
+}
+/* IRISH PUB SIGNUP TWO-COLUMN LAYOUT */
+
+#signupForm.signup-grid {
+display: grid !important;
+grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+gap: 16px 14px;
+width: 100%;
+box-sizing: border-box;
+}
+
+#signupForm.signup-grid.hidden {
+display: none !important;
+}
+
+#signupForm .signup-field {
+display: flex;
+flex-direction: column;
+min-width: 0;
+width: 100%;
+}
+
+#signupForm .signup-field label {
+display: block;
+margin-bottom: 7px;
+color: #d8b76a;
+font-size: 12px;
+font-weight: 700;
+text-align: left;
+}
+
+#signupForm .signup-field input {
+display: block;
+width: 100%;
+min-width: 0;
+height: 44px;
+padding: 0 12px;
+box-sizing: border-box;
+border: 1px solid rgba(216, 183, 106, 0.35);
+border-radius: 8px;
+background: rgba(8, 20, 14, 0.9);
+color: #fff;
+outline: none;
+}
+
+#signupForm .signup-field input:focus {
+border-color: #d8b76a;
+box-shadow: 0 0 8px rgba(216, 183, 106, 0.18);
+}
+
+#signupForm .signup-password {
+grid-column: 1 / -1;
+}
+
+#signupForm .signup-submit {
+grid-column: 1 / -1;
+width: 100%;
+margin-top: 3px;
+}
+
+@media (max-width: 400px) {
+#signupForm.signup-grid {
+gap: 12px 9px;
+}
+
+
+#signupForm .signup-field input {
+    padding: 0 8px;
+    font-size: 12px;
+}
+
+
+}
+/* COMPACT SIGNUP BOX */
+
+.auth-card {
+padding: 25px !important;
+max-width: 500px;
+box-sizing: border-box;
+}
+
+#signupForm.signup-grid {
+gap: 10px 12px !important;
+margin-top: 10px;
+}
+
+#signupForm .signup-field label {
+margin-bottom: 4px !important;
+font-size: 11px !important;
+}
+
+#signupForm .signup-field input {
+height: 36px !important;
+padding: 0 10px !important;
+font-size: 12px !important;
+border-radius: 6px !important;
+}
+
+#signupForm .signup-submit {
+height: 40px !important;
+padding: 8px !important;
+margin-top: 2px !important;
+font-size: 12px !important;
+}
+
+.auth-card h1 {
+margin-top: 5px;
+margin-bottom: 5px;
+}
+
+.auth-card .muted {
+margin-bottom: 12px;
+}
+
+.auth-card .small-note {
+margin-top: 10px;
+font-size: 11px;
+}
+
+@media (max-width: 480px) {
+.auth-card {
+width: calc(100% - 24px);
+max-width: 460px;
+padding: 18px !important;
+}
+}
+
