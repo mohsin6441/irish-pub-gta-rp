@@ -397,14 +397,17 @@ app.get("/api/me", verifyFirebaseToken, (req, res) => {
 app.use(express.static(__dirname, {
     index: "index.html"
 }));
+
 // STAFF PORTAL ROUTE
 app.get("/staff", (req, res) => {
-    res.sendFile(path.join(__dirname, "staff", "index.html"));
+    res.sendFile(path.join(__dirname, "Staff", "index.html"));
 });
 
 app.get("/staff/", (req, res) => {
-    res.sendFile(path.join(__dirname, "staff", "index.html"));
+    res.sendFile(path.join(__dirname, "Staff", "index.html"));
 });
+
+
 // ========================================================
 // STAFF WEBSITE
 // ========================================================
