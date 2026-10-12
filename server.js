@@ -36,9 +36,10 @@ const STAFF_DEFAULTS = [
         email: OWNER_EMAIL
     },
     {
-        name: "Manager",
-        username: "manager",
-        role: "Manager"
+        name: "Alison",
+        username: "don",
+        role: "Staff",
+        email: "mohsin132211@gmail.com"
     },
     {
         name: "Alison Burgurs",
