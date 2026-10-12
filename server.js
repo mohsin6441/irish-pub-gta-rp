@@ -519,7 +519,52 @@ app.get("/api/shift/current", verifyFirebaseToken, (req, res) => {
         startedAt: shift.startedAt
     });
 });
+// ========================================================
+// IRISH PUB SHIFT DISCORD NOTIFICATION
+// ========================================================
 
+async function sendShiftDiscordNotification(title, color, fields) {
+    try {
+        const webhookURL = process.env.DISCORD_WEBHOOK_URL;
+
+        if (!webhookURL) {
+            console.log("Shift Discord webhook is not configured.");
+            return;
+        }
+
+        const response = await fetch(webhookURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                embeds: [
+                    {
+                        title,
+                        color,
+                        fields,
+                        footer: {
+                            text: "Irish Pub • Developed By Mohsin"
+                        },
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            })
+        });
+
+        if (!response.ok) {
+            console.error(
+                "SHIFT DISCORD ERROR:",
+                response.status,
+                await response.text()
+            );
+        } else {
+            console.log("Shift Discord notification sent.");
+        }
+    } catch (error) {
+        console.error("SHIFT DISCORD ERROR:", error.message);
+    }
+}
 // ========================================================
 // START SHIFT
 // ========================================================
@@ -555,6 +600,32 @@ app.post("/api/shift/start", verifyFirebaseToken, (req, res) => {
         }
 
         console.log(`${req.staff.name} started shift.`);
+        sendShiftDiscordNotification(
+    "🟢 SHIFT STARTED",
+    0x2ecc71,
+    [
+        {
+            name: "Staff Name",
+            value: req.staff.name || "Unknown",
+            inline: true
+        },
+        {
+            name: "Username",
+            value: req.staff.username || "Unknown",
+            inline: true
+        },
+        {
+            name: "Shift Start",
+            value: `<t:${Math.floor(new Date(startedAt).getTime() / 1000)}:F>`,
+            inline: false
+        },
+        {
+            name: "Status",
+            value: "Shift is now active.",
+            inline: false
+        }
+    ]
+);
 
         res.json({
             success: true,
@@ -620,6 +691,41 @@ app.post("/api/shift/end", verifyFirebaseToken, (req, res) => {
         }
 
         console.log(`${req.staff.name} ended shift.`);
+        const hours = Math.floor(duration / 3600);
+const minutes = Math.floor((duration % 3600) / 60);
+const seconds = duration % 60;
+
+sendShiftDiscordNotification(
+    "🔴 SHIFT ENDED",
+    0xe74c3c,
+    [
+        {
+            name: "Staff Name",
+            value: req.staff.name || "Unknown",
+            inline: true
+        },
+        {
+            name: "Username",
+            value: req.staff.username || "Unknown",
+            inline: true
+        },
+        {
+            name: "Shift Started",
+            value: `<t:${Math.floor(start / 1000)}:F>`,
+            inline: false
+        },
+        {
+            name: "Shift Ended",
+            value: `<t:${Math.floor(end / 1000)}:F>`,
+            inline: false
+        },
+        {
+            name: "Total Duty Time",
+            value: `${hours}h ${minutes}m ${seconds}s`,
+            inline: false
+        }
+    ]
+);
 
         res.json({
             success: true,
