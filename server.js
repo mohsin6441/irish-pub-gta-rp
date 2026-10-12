@@ -371,7 +371,131 @@ app.post("/api/auth/check-email", (req, res) => {
         message: "Email approved."
     });
 });
+// ==========================================
+// STAFF REGISTRATION DISCORD NOTIFICATION
+// ==========================================
 
+app.post("/api/auth/register-profile", async (req, res) => {
+    try {
+        const authHeader = req.headers.authorization || "";
+        const token = authHeader.startsWith("Bearer ")
+            ? authHeader.slice(7)
+            : "";
+
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: "Authentication token missing."
+            });
+        }
+
+        // Verify Firebase account
+        const decodedToken = await firebaseAuth.verifyIdToken(token);
+
+        const name = String(req.body.name || "").trim();
+        const cityName = String(req.body.cityName || "").trim();
+        const cid = String(req.body.cid || "").trim();
+        const cityNumber = String(req.body.cityNumber || "").trim();
+        const discord = String(req.body.discord || "").trim();
+        const email = String(req.body.email || "")
+            .trim()
+            .toLowerCase();
+
+        // Ensure submitted email matches Firebase account
+        if (
+            !decodedToken.email ||
+            decodedToken.email.toLowerCase() !== email
+        ) {
+            return res.status(403).json({
+                success: false,
+                message: "Email verification failed."
+            });
+        }
+
+        if (!name || !cityName || !cid ||
+            !cityNumber || !discord || !email) {
+            return res.status(400).json({
+                success: false,
+                message: "All registration fields are required."
+            });
+        }
+
+        // Existing approved staff cannot register again
+        if (findStaffByEmail(email)) {
+            return res.status(409).json({
+                success: false,
+                message: "This email is already registered."
+            });
+        }
+
+        const webhookUrl = process.env.DISCORD_STAFF_WEBHOOK_URL;
+
+        if (!webhookUrl) {
+            console.error("DISCORD_STAFF_WEBHOOK_URL is missing.");
+
+            return res.status(500).json({
+                success: false,
+                message: "Registration notification is not configured."
+            });
+        }
+
+        // Password is intentionally NOT sent to Discord.
+        const discordResponse = await fetch(webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                embeds: [{
+                    title: "☘️ New Irish Pub Staff Registration",
+                    color: 3066993,
+                    fields: [
+                        { name: "Name", value: name, inline: true },
+                        { name: "City Name", value: cityName, inline: true },
+                        { name: "CID", value: cid, inline: true },
+                        { name: "City Number", value: cityNumber, inline: true },
+                        { name: "Discord", value: discord, inline: true },
+                        { name: "Gmail", value: email, inline: false },
+                        {
+                            name: "Status",
+                            value: "Pending Owner Approval",
+                            inline: false
+                        }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: {
+                        text: "Irish Pub • Developed By Mohsin"
+                    }
+                }]
+            })
+        });
+
+        if (!discordResponse.ok) {
+            console.error(
+                "Staff registration Discord notification failed:",
+                discordResponse.status
+            );
+
+            return res.status(502).json({
+                success: false,
+                message: "Could not send registration notification."
+            });
+        }
+
+        return res.json({
+            success: true,
+            message: "Registration notification sent."
+        });
+
+    } catch (error) {
+        console.error("Staff registration error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Registration failed. Please try again."
+        });
+    }
+});
 // ========================================================
 // CURRENT AUTHENTICATED USER
 // ========================================================
