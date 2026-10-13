@@ -1023,15 +1023,15 @@ TRUSTED SERVER-SIDE MENU
 const SALE_MENU = [
 { id: "smores", name: "S'mores", price: 40 },
 { id: "skittles", name: "Skittles", price: 45 },
-{ id: "hot-dog", name: "Hot Dog", price: 60 },
-{ id: "ham-sandwich", name: "Ham Sandwich", price: 60 },
+{ id: "hotdog", name: "Hot Dog", price: 60 },
+{ id: "hamsandwich", name: "Ham Sandwich", price: 60 },
 { id: "nachos", name: "Nachos", price: 50 },
-{ id: "toyto-chips", name: "Toyto Chips", price: 20 },
-{ id: "shepherd-pie", name: "Shepherd's Pie", price: 75 },
-{ id: "fish-chips", name: "Fish And Chips", price: 80 },
+{ id: "toytochips", name: "Toyto Chips", price: 20 },
+{ id: "shepherdspie", name: "Shepherd's Pie", price: 75 },
+{ id: "fishandchips", name: "Fish And Chips", price: 80 },
 { id: "fries", name: "Fries", price: 80 },
 
-{ id: "irish-coffee", name: "Irish Coffee", price: 50 },
+{ id: "irishcoffee", name: "Irish Coffee", price: 50 },
 { id: "guinness", name: "Guinness", price: 40 },
 { id: "jameson", name: "Jameson", price: 180 },
 { id: "whiskey", name: "Whiskey", price: 170 },
@@ -1041,13 +1041,13 @@ const SALE_MENU = [
 { id: "absinthe", name: "Absinthe", price: 140 },
 { id: "beer", name: "Beer", price: 120 },
 { id: "cider", name: "Cider", price: 100 },
-{ id: "sweet-tea", name: "Sweet Tea", price: 50 },
-{ id: "green-cow", name: "Green Cow", price: 60 },
+{ id: "sweettea", name: "Sweet Tea", price: 50 },
+{ id: "greencow", name: "Green Cow", price: 60 },
 { id: "water", name: "Water", price: 20 },
-{ id: "delicious-smoothie", name: "Delicious Smoothie", price: 80 },
-{ id: "suspicious-smoothie", name: "Suspicious Smoothie", price: 80 },
+{ id: "delicioussmoothie", name: "Delicious Smoothie", price: 80 },
+{ id: "suspicioussmoothie", name: "Suspicious Smoothie", price: 80 },
 { id: "sprunk", name: "Sprunk", price: 70 },
-{ id: "coca-cola", name: "Coca Cola", price: 60 }
+{ id: "cocacola", name: "Coca Cola", price: 60 }
 
 ];
 
