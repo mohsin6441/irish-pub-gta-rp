@@ -1023,7 +1023,7 @@ TRUSTED SERVER-SIDE MENU
 const SALE_MENU = [
 { id: "smores", name: "S'mores", price: 40 },
 { id: "skittles", name: "Skittles", price: 45 },
-{ id: "hotdog", name: "Hot Dog", price: 60 },
+{ id: "hot-dog", name: "Hot Dog", price: 60 },
 { id: "ham-sandwich", name: "Ham Sandwich", price: 60 },
 { id: "nachos", name: "Nachos", price: 50 },
 { id: "toyto-chips", name: "Toyto Chips", price: 20 },
