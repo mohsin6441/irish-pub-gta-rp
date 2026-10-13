@@ -1176,8 +1176,7 @@ const user = req.staff;
 
     // Discord notification
     const webhook =
-        process.env.DISCORD_SALES_WEBHOOK_URL ||
-        process.env.DISCORD_SALES_WEBHOOK;
+        process.env.DISCORD_SALES_WEBHOOK_URL;
 
     if (webhook) {
         try {
