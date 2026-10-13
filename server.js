@@ -875,6 +875,7 @@ setInterval(() => {
 for (const username of Object.keys(database.shifts)) {
     autoEndShift(username);
 }
+
 // ========================================================
 // END SHIFT
 // ========================================================
@@ -1023,15 +1024,15 @@ TRUSTED SERVER-SIDE MENU
 const SALE_MENU = [
 { id: "smores", name: "S'mores", price: 40 },
 { id: "skittles", name: "Skittles", price: 45 },
-{ id: "hotdog", name: "Hot Dog", price: 60 },
-{ id: "hamsandwich", name: "Ham Sandwich", price: 60 },
+{ id: "hot-dog", name: "Hot Dog", price: 60 },
+{ id: "ham-sandwich", name: "Ham Sandwich", price: 60 },
 { id: "nachos", name: "Nachos", price: 50 },
-{ id: "toytochips", name: "Toyto Chips", price: 20 },
-{ id: "shepherdspie", name: "Shepherd's Pie", price: 75 },
-{ id: "fishandchips", name: "Fish And Chips", price: 80 },
+{ id: "toyto-chips", name: "Toyto Chips", price: 20 },
+{ id: "shepherds-pie", name: "Shepherd's Pie", price: 75 },
+{ id: "fish-and-chips", name: "Fish And Chips", price: 80 },
 { id: "fries", name: "Fries", price: 80 },
 
-{ id: "irishcoffee", name: "Irish Coffee", price: 50 },
+{ id: "irish-coffee", name: "Irish Coffee", price: 50 },
 { id: "guinness", name: "Guinness", price: 40 },
 { id: "jameson", name: "Jameson", price: 180 },
 { id: "whiskey", name: "Whiskey", price: 170 },
@@ -1041,8 +1042,8 @@ const SALE_MENU = [
 { id: "absinthe", name: "Absinthe", price: 140 },
 { id: "beer", name: "Beer", price: 120 },
 { id: "cider", name: "Cider", price: 100 },
-{ id: "sweettea", name: "Sweet Tea", price: 50 },
-{ id: "greencow", name: "Green Cow", price: 60 },
+{ id: "sweet-tea", name: "Sweet Tea", price: 50 },
+{ id: "green-cow", name: "Green Cow", price: 60 },
 { id: "water", name: "Water", price: 20 },
 { id: "delicioussmoothie", name: "Delicious Smoothie", price: 80 },
 { id: "suspicioussmoothie", name: "Suspicious Smoothie", price: 80 },

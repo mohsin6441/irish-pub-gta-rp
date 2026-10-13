@@ -20,34 +20,250 @@ const firebaseConfig = {
 
 const TAX_RATE = 0.05;
 
-const SALE_MENU = [
-{ id: "smores", name: "S'mores", price: 40 },
-{ id: "skittles", name: "Skittles", price: 45 },
-{ id: "hotdog", name: "Hot Dog", price: 60 },
-{ id: "hamsandwich", name: "Ham Sandwich", price: 60 },
-{ id: "nachos", name: "Nachos", price: 50 },
-{ id: "toytochips", name: "Toyto Chips", price: 20 },
-{ id: "shepherdspie", name: "Shepherd's Pie", price: 75 },
-{ id: "fishandchips", name: "Fish And Chips", price: 80 },
-{ id: "fries", name: "Fries", price: 80 },
+const MENU = [
+    // ==================== FOOD ====================
+    {
+        id: "smores",
+        name: "S'MORES",
+        category: "Food",
+        price: 40,
+        emoji: "🍫"
+    },
+    {
+        id: "skittles",
+        name: "SKITTLES",
+        category: "Food",
+        price: 45,
+        emoji: "🍬"
+    },
+    {
+        id: "hot-dog",
+        name: "HOT DOG",
+        category: "Food",
+        price: 60,
+        emoji: "🌭"
+    },
+    {
+        id: "ham-sandwich",
+        name: "HAM SANDWICH",
+        category: "Food",
+        price: 60,
+        emoji: "🥪"
+    },
+    {
+        id: "nachos",
+        name: "NACHOS",
+        category: "Food",
+        price: 50,
+        emoji: "🌮"
+    },
+    {
+        id: "toyto-chips",
+        name: "TOYTO CHIPS",
+        category: "Food",
+        price: 20,
+        emoji: "🍟"
+    },
+    {
+        id: "shepherds-pie",
+        name: "SHEPHERD'S PIE",
+        category: "Food",
+        price: 75,
+        emoji: "🥧"
+    },
+    {
+        id: "fish-and-chips",
+        name: "FISH AND CHIPS",
+        category: "Food",
+        price: 80,
+        emoji: "🐟"
+    },
+    {
+        id: "fries",
+        name: "FRIES",
+        category: "Food",
+        price: 80,
+        emoji: "🍟"
+    },
 
-{ id: "irishcoffee", name: "Irish Coffee", price: 50 },
-{ id: "guinness", name: "Guinness", price: 40 },
-{ id: "jameson", name: "Jameson", price: 180 },
-{ id: "whiskey", name: "Whiskey", price: 170 },
-{ id: "rum", name: "Rum", price: 90 },
-{ id: "vodka", name: "Vodka", price: 90 },
-{ id: "tequila", name: "Tequila", price: 80 },
-{ id: "absinthe", name: "Absinthe", price: 140 },
-{ id: "beer", name: "Beer", price: 120 },
-{ id: "cider", name: "Cider", price: 100 },
-{ id: "sweettea", name: "Sweet Tea", price: 50 },
-{ id: "greencow", name: "Green Cow", price: 60 },
-{ id: "water", name: "Water", price: 20 },
-{ id: "delicioussmoothie", name: "Delicious Smoothie", price: 80 },
-{ id: "suspicioussmoothie", name: "Suspicious Smoothie", price: 80 },
-{ id: "sprunk", name: "Sprunk", price: 70 },
-{ id: "cocacola", name: "Coca Cola", price: 60 }
+    // ================= SPECIAL DRINKS =================
+    {
+        id: "old-fashioned",
+        name: "OLD FASHIONED",
+        category: "Special Drinks",
+        price: 200,
+        emoji: "🥃"
+    },
+    {
+        id: "pina-colada",
+        name: "PINA COLADA",
+        category: "Special Drinks",
+        price: 150,
+        emoji: "🍹"
+    },
+    {
+        id: "shirley-temple",
+        name: "SHIRLEY TEMPLE",
+        category: "Special Drinks",
+        price: 145,
+        emoji: "🍒"
+    },
+    {
+        id: "virgin-mojito",
+        name: "VIRGIN MOJITO",
+        category: "Special Drinks",
+        price: 145,
+        emoji: "🍃"
+    },
+    {
+        id: "bloody-mary",
+        name: "BLOODY MARY",
+        category: "Special Drinks",
+        price: 200,
+        emoji: "🍅"
+    },
+    {
+        id: "margarita",
+        name: "MARGARITA",
+        category: "Special Drinks",
+        price: 190,
+        emoji: "🍸"
+    },
+    {
+        id: "mojito",
+        name: "MOJITO",
+        category: "Special Drinks",
+        price: 80,
+        emoji: "🍹"
+    },
+    {
+        id: "salty-pigeon",
+        name: "SALTY PIGEON",
+        category: "Special Drinks",
+        price: 60,
+        emoji: "🥛"
+    },
+
+    // ==================== DRINKS ====================
+    {
+        id: "irish-coffee",
+        name: "IRISH COFFEE",
+        category: "Drinks",
+        price: 50,
+        emoji: "☕"
+    },
+    {
+        id: "guinness",
+        name: "GUINNESS",
+        category: "Drinks",
+        price: 100,
+        emoji: "🍺"
+    },
+    {
+        id: "jameson",
+        name: "JAMESON",
+        category: "Drinks",
+        price: 180,
+        emoji: "🥃"
+    },
+    {
+        id: "whiskey",
+        name: "WHISKEY",
+        category: "Drinks",
+        price: 200,
+        emoji: "🥃"
+    },
+    {
+        id: "rum",
+        name: "RUM",
+        category: "Drinks",
+        price: 90,
+        emoji: "🍹"
+    },
+    {
+        id: "vodka",
+        name: "VODKA",
+        category: "Drinks",
+        price: 90,
+        emoji: "🍸"
+    },
+    {
+        id: "tequila",
+        name: "TEQUILA",
+        category: "Drinks",
+        price: 80,
+        emoji: "🥃"
+    },
+    {
+        id: "absinthe",
+        name: "ABSINTHE",
+        category: "Drinks",
+        price: 140,
+        emoji: "🍸"
+    },
+    {
+        id: "beer",
+        name: "BEER",
+        category: "Drinks",
+        price: 120,
+        emoji: "🍺"
+    },
+    {
+        id: "cider",
+        name: "CIDER",
+        category: "Drinks",
+        price: 100,
+        emoji: "🍎"
+    },
+    {
+        id: "sweet-tea",
+        name: "SWEET TEA",
+        category: "Drinks",
+        price: 50,
+        emoji: "🧋"
+    },
+    {
+        id: "green-cow",
+        name: "GREEN COW",
+        category: "Drinks",
+        price: 60,
+        emoji: "🥤"
+    },
+    {
+        id: "water",
+        name: "WATER",
+        category: "Drinks",
+        price: 20,
+        emoji: "💧"
+    },
+    {
+        id: "delicious-smoothie",
+        name: "DELICIOUS SMOOTHIE",
+        category: "Drinks",
+        price: 80,
+        emoji: "🥤"
+    },
+    {
+        id: "suspicious-smoothie",
+        name: "SUSPICIOUS SMOOTHIE",
+        category: "Drinks",
+        price: 80,
+        emoji: "🧪"
+    },
+    {
+        id: "sprunk",
+        name: "SPRUNK",
+        category: "Drinks",
+        price: 70,
+        emoji: "🥤"
+    },
+    {
+        id: "coca-cola",
+        name: "COCA COLA",
+        category: "Drinks",
+        price: 60,
+        emoji: "🥤"
+    }
 ];
 
 let auth = null;
@@ -663,11 +879,16 @@ function updateShiftUI() {
         timer.textContent = formatDuration(Date.now() - startDate.getTime());
     }
 
-    updateTimer();
+   updateTimer();
 
-    if (active && startDate) {
-        timerInterval = setInterval(updateTimer, 1000);
-    }
+if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+if (active && startDate) {
+    timerInterval = setInterval(updateTimer, 1000);
+}
 
     const dashboardShift = $("#dashboardShift");
     if (dashboardShift) {
