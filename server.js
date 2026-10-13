@@ -768,113 +768,6 @@ app.post("/api/shift/start", verifyFirebaseToken, (req, res) => {
         });
     }
 });
-// ========================================================
-// AUTO SHIFT OFF — AFTER 2 HOURS
-// ========================================================
-
-const AUTO_SHIFT_OFF_MS = 2 * 60 * 60 * 1000;
-
-function autoEndShift(username) {
-    const activeShift = database.shifts[username];
-
-    if (!activeShift) return false;
-
-    const startedAt = new Date(activeShift.startedAt).getTime();
-
-    if (!Number.isFinite(startedAt)) return false;
-
-    const now = Date.now();
-
-    // Shift 2 hours complete na hole OFF korbe na
-    if (now - startedAt < AUTO_SHIFT_OFF_MS) {
-        return false;
-    }
-
-    const endedAt = new Date(startedAt + AUTO_SHIFT_OFF_MS).toISOString();
-
-    const duration = Math.floor(
-        (new Date(endedAt).getTime() - startedAt) / 1000
-    );
-
-    const completedShift = {
-        username,
-        staffName: activeShift.staffName || username,
-        startedAt: activeShift.startedAt,
-        endedAt,
-        duration,
-        autoEnded: true
-    };
-
-    database.shiftHistory.push(completedShift);
-    delete database.shifts[username];
-
-    if (!saveData(database)) {
-        database.shiftHistory.pop();
-        database.shifts[username] = activeShift;
-
-        console.error("AUTO SHIFT OFF: Could not save shift.");
-        return false;
-    }
-
-    console.log(
-        `${completedShift.staffName} shift automatically ended after 2 hours.`
-    );
-
-    sendShiftDiscordNotification(
-        "⏰ AUTOMATIC SHIFT OFF",
-        0xe67e22,
-        [
-            {
-                name: "Staff Name",
-                value: completedShift.staffName,
-                inline: true
-            },
-            {
-                name: "Username",
-                value: username,
-                inline: true
-            },
-            {
-                name: "Shift Started",
-                value: `<t:${Math.floor(startedAt / 1000)}:F>`,
-                inline: false
-            },
-            {
-                name: "Automatically Ended",
-                value: `<t:${Math.floor(new Date(endedAt).getTime() / 1000)}:F>`,
-                inline: false
-            },
-            {
-                name: "Total Duty Time",
-                value: "2 hours",
-                inline: false
-            },
-            {
-                name: "Reason",
-                value: "Staff did not turn off the shift manually.",
-                inline: false
-            }
-        ]
-    );
-
-    return true;
-}
-
-// Check active shifts every 15 seconds
-setInterval(() => {
-    try {
-        for (const username of Object.keys(database.shifts)) {
-            autoEndShift(username);
-        }
-    } catch (error) {
-        console.error("AUTO SHIFT OFF ERROR:", error);
-    }
-}, 15 * 1000);
-
-// Check immediately when the server starts
-for (const username of Object.keys(database.shifts)) {
-    autoEndShift(username);
-}
 
 // ========================================================
 // END SHIFT
@@ -884,13 +777,6 @@ app.post("/api/shift/end", verifyFirebaseToken, (req, res) => {
     try {
         const username = req.staff.username;
         const activeShift = database.shifts[username];
-        // If 2 hours have already passed, automatically end the shift.
-if (autoEndShift(username)) {
-    return res.json({
-        success: true,
-        message: "Your shift was automatically ended after 2 hours."
-    });
-}
 
         if (!activeShift) {
             return res.status(400).json({
@@ -984,10 +870,6 @@ sendShiftDiscordNotification(
     }
 });
 
-// ========================================================
-// SALES HISTORY — GET
-// IMPORTANT: This route must be outside POST /api/sales.
-// ========================================================
 
 /* ========================================================
 SALES HISTORY — GET
