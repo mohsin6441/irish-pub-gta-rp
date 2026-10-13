@@ -650,45 +650,101 @@ app.get("/api/shift/current", verifyFirebaseToken, (req, res) => {
 // ========================================================
 
 async function sendShiftDiscordNotification(title, color, fields) {
-    try {
-        const webhookURL = process.env.DISCORD_WEBHOOK_URL;
+    const webhookURL = process.env.DISCORD_WEBHOOK_URL;
 
-        if (!webhookURL) {
-            console.log("Shift Discord webhook is not configured.");
-            return;
-        }
+    if (!webhookURL) {
+        console.log("Shift Discord webhook is not configured.");
+        return;
+    }
 
-        const response = await fetch(webhookURL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                embeds: [
-                    {
-                        title,
-                        color,
-                        fields,
-                        footer: {
-                            text: "Irish Pub • Developed By Mohsin"
-                        },
-                        timestamp: new Date().toISOString()
+    const payload = {
+        embeds: [
+            {
+                title,
+                color,
+                fields,
+                footer: {
+                    text: "Irish Pub • Developed By Mohsin"
+                },
+                timestamp: new Date().toISOString()
+            }
+        ]
+    };
+
+    // Maximum 3 attempts, including the first request
+    for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+            const response = await fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                console.log("Shift Discord notification sent.");
+                return;
+            }
+
+            const responseText = await response.text();
+
+            if (response.status === 429) {
+                let retrySeconds = 5;
+
+                try {
+                    const data = JSON.parse(responseText);
+
+                    if (
+                        Number.isFinite(Number(data.retry_after)) &&
+                        Number(data.retry_after) >= 0
+                    ) {
+                        retrySeconds = Number(data.retry_after);
                     }
-                ]
-            })
-        });
+                } catch (error) {
+                    // Use the default delay if the response isn't JSON.
+                }
 
-        if (!response.ok) {
+                if (attempt === 3) {
+                    console.error(
+                        "Shift Discord notification failed after 3 attempts."
+                    );
+                    return;
+                }
+
+                // Avoid retrying before Discord's requested wait time.
+                retrySeconds = Math.max(
+                    retrySeconds,
+                    Number(response.headers.get("Retry-After")) || 0
+                );
+
+                console.warn(
+                    `Discord rate limited shift notification. Waiting ${retrySeconds} seconds.`
+                );
+
+                await new Promise(resolve =>
+                    setTimeout(resolve, Math.ceil(retrySeconds * 1000) + 250)
+                );
+
+                continue;
+            }
+
             console.error(
                 "SHIFT DISCORD ERROR:",
                 response.status,
-                await response.text()
+                responseText
             );
-        } else {
-            console.log("Shift Discord notification sent.");
+
+            return;
+
+        } catch (error) {
+            console.error(
+                "SHIFT DISCORD ERROR:",
+                error.message
+            );
+
+            return;
         }
-    } catch (error) {
-        console.error("SHIFT DISCORD ERROR:", error.message);
     }
 }
 // ========================================================
