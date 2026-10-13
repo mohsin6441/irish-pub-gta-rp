@@ -417,6 +417,29 @@
       "startedAt": "2026-10-12T09:26:22.542Z",
       "endedAt": "2026-10-12T10:43:13.244Z",
       "duration": 4610
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-13T07:41:30.720Z",
+      "endedAt": "2026-10-13T07:42:30.720Z",
+      "duration": 60,
+      "autoEnded": true
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-13T07:50:01.928Z",
+      "endedAt": "2026-10-13T07:51:01.928Z",
+      "duration": 60,
+      "autoEnded": true
+    },
+    {
+      "username": "mohsin",
+      "staffName": "Mohsin",
+      "startedAt": "2026-10-13T07:52:27.126Z",
+      "endedAt": "2026-10-13T07:52:31.247Z",
+      "duration": 4
     }
   ],
   "sales": [
