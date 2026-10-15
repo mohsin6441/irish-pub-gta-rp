@@ -533,7 +533,59 @@ app.get("/staff/", (req, res) => {
     res.sendFile(path.join(__dirname, "Staff", "index.html"));
 });
 
+// ========================================
+// IRISH PUB DISCORD BOT API
+// ========================================
 
+app.get("/api/bot/report", async (req, res) => {
+    try {
+        const providedSecret = req.get("x-irish-pub-secret");
+        const expectedSecret = process.env.DISCORD_BOT_API_SECRET;
+
+        if (!expectedSecret || !providedSecret) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            });
+        }
+
+        const crypto = require("crypto");
+
+        const providedBuffer = Buffer.from(providedSecret);
+        const expectedBuffer = Buffer.from(expectedSecret);
+
+        if (
+            providedBuffer.length !== expectedBuffer.length ||
+            !crypto.timingSafeEqual(providedBuffer, expectedBuffer)
+        ) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized"
+            });
+        }
+
+        return res.json({
+            success: true,
+            staff: database.staff.map(member => ({
+                name: member.name,
+                username: member.username,
+                role: member.role
+            })),
+            shifts: database.shifts,
+            shiftHistory: database.shiftHistory,
+            sales: database.sales,
+            generatedAt: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error("BOT REPORT API ERROR:", error.message);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to generate report."
+        });
+    }
+});
 // ========================================================
 // STAFF WEBSITE
 // ========================================================
